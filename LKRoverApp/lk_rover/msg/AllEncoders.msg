@@ -1,0 +1,8 @@
+float32 bucket_left_enc
+float32 bucket_right_enc
+float32 ladder_left_enc
+float32 ladder_right_enc
+uint64 front_left_enc
+uint64 front_right_enc
+uint64 back_left_enc
+uint64 back_right_enc

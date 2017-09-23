@@ -1,0 +1,10 @@
+float32 bucket_left
+float32 bucket_right
+float32 bucket_spin
+float32 bucket_flap
+float32 ladder_left
+float32 ladder_right
+float32 front_left
+float32 front_right
+float32 back_left
+float32 back_right

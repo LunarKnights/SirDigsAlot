@@ -1,0 +1,3 @@
+RoverComm (shared library)
+RoverAI (shared library)
+RoverServer (executable)
