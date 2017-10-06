@@ -10,30 +10,28 @@
 
 namespace sensor_msgs
 {
+class MagneticField : public ros::Msg
+{
+public:
+  typedef std_msgs::Header _header_type;
+  _header_type header;
+  typedef geometry_msgs::Vector3 _magnetic_field_type;
+  _magnetic_field_type magnetic_field;
+  double magnetic_field_covariance[9];
 
-  class MagneticField : public ros::Msg
+  MagneticField() : header(), magnetic_field(), magnetic_field_covariance()
   {
-    public:
-      typedef std_msgs::Header _header_type;
-      _header_type header;
-      typedef geometry_msgs::Vector3 _magnetic_field_type;
-      _magnetic_field_type magnetic_field;
-      double magnetic_field_covariance[9];
+  }
 
-    MagneticField():
-      header(),
-      magnetic_field(),
-      magnetic_field_covariance()
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    offset += this->header.serialize(outbuffer + offset);
+    offset += this->magnetic_field.serialize(outbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
     {
-    }
-
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      offset += this->header.serialize(outbuffer + offset);
-      offset += this->magnetic_field.serialize(outbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_magnetic_field_covariancei;
@@ -47,39 +45,45 @@ namespace sensor_msgs
       *(outbuffer + offset + 6) = (u_magnetic_field_covariancei.base >> (8 * 6)) & 0xFF;
       *(outbuffer + offset + 7) = (u_magnetic_field_covariancei.base >> (8 * 7)) & 0xFF;
       offset += sizeof(this->magnetic_field_covariance[i]);
-      }
-      return offset;
     }
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    offset += this->header.deserialize(inbuffer + offset);
+    offset += this->magnetic_field.deserialize(inbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
     {
-      int offset = 0;
-      offset += this->header.deserialize(inbuffer + offset);
-      offset += this->magnetic_field.deserialize(inbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_magnetic_field_covariancei;
       u_magnetic_field_covariancei.base = 0;
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      u_magnetic_field_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 0))) << (8 * 0);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 1))) << (8 * 1);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 2))) << (8 * 2);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 3))) << (8 * 3);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 4))) << (8 * 4);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 5))) << (8 * 5);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 6))) << (8 * 6);
+      u_magnetic_field_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 7))) << (8 * 7);
       this->magnetic_field_covariance[i] = u_magnetic_field_covariancei.real;
       offset += sizeof(this->magnetic_field_covariance[i]);
-      }
-     return offset;
     }
+    return offset;
+  }
 
-    const char * getType(){ return "sensor_msgs/MagneticField"; };
-    const char * getMD5(){ return "2f3b0b43eed0c9501de0fa3ff89a45aa"; };
-
+  const char* getType()
+  {
+    return "sensor_msgs/MagneticField";
   };
-
+  const char* getMD5()
+  {
+    return "2f3b0b43eed0c9501de0fa3ff89a45aa";
+  };
+};
 }
 #endif

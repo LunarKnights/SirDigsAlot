@@ -35,10 +35,18 @@ catkin_make
 # Developer notes
 The code should be formatted against the ROS standard so that's everything's nice and uniform.
 The easiest way to do this is using `clang-tidy` with this guy's [formatting rules](https://github.com/davetcoleman/roscpp_code_format)
-You can add this as a precommit git so that it will automatically do all this for you by following these instructions
 
+This is how to install `clang-tidy` and that guy's rules:
 ```
-# TODO
+sudo apt-get install -y clang-format-3.8
+cd ~
+git clone https://github.com/davetcoleman/roscpp_code_format
+ln -s ~/roscpp_code_format/.clang-format ~/catkin_ws/.clang-format
+```
+
+and then run this from the `src/` directory to restyle any files you've changed:
+```
+find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs clang-format-3.8 -i -style=file $1
 ```
 
 

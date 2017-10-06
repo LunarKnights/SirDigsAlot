@@ -11,40 +11,41 @@
 
 namespace sensor_msgs
 {
+class Imu : public ros::Msg
+{
+public:
+  typedef std_msgs::Header _header_type;
+  _header_type header;
+  typedef geometry_msgs::Quaternion _orientation_type;
+  _orientation_type orientation;
+  double orientation_covariance[9];
+  typedef geometry_msgs::Vector3 _angular_velocity_type;
+  _angular_velocity_type angular_velocity;
+  double angular_velocity_covariance[9];
+  typedef geometry_msgs::Vector3 _linear_acceleration_type;
+  _linear_acceleration_type linear_acceleration;
+  double linear_acceleration_covariance[9];
 
-  class Imu : public ros::Msg
+  Imu()
+    : header()
+    , orientation()
+    , orientation_covariance()
+    , angular_velocity()
+    , angular_velocity_covariance()
+    , linear_acceleration()
+    , linear_acceleration_covariance()
   {
-    public:
-      typedef std_msgs::Header _header_type;
-      _header_type header;
-      typedef geometry_msgs::Quaternion _orientation_type;
-      _orientation_type orientation;
-      double orientation_covariance[9];
-      typedef geometry_msgs::Vector3 _angular_velocity_type;
-      _angular_velocity_type angular_velocity;
-      double angular_velocity_covariance[9];
-      typedef geometry_msgs::Vector3 _linear_acceleration_type;
-      _linear_acceleration_type linear_acceleration;
-      double linear_acceleration_covariance[9];
+  }
 
-    Imu():
-      header(),
-      orientation(),
-      orientation_covariance(),
-      angular_velocity(),
-      angular_velocity_covariance(),
-      linear_acceleration(),
-      linear_acceleration_covariance()
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    offset += this->header.serialize(outbuffer + offset);
+    offset += this->orientation.serialize(outbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
     {
-    }
-
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      offset += this->header.serialize(outbuffer + offset);
-      offset += this->orientation.serialize(outbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_orientation_covariancei;
@@ -58,10 +59,12 @@ namespace sensor_msgs
       *(outbuffer + offset + 6) = (u_orientation_covariancei.base >> (8 * 6)) & 0xFF;
       *(outbuffer + offset + 7) = (u_orientation_covariancei.base >> (8 * 7)) & 0xFF;
       offset += sizeof(this->orientation_covariance[i]);
-      }
-      offset += this->angular_velocity.serialize(outbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+    }
+    offset += this->angular_velocity.serialize(outbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
+    {
+      union
+      {
         double real;
         uint64_t base;
       } u_angular_velocity_covariancei;
@@ -75,10 +78,12 @@ namespace sensor_msgs
       *(outbuffer + offset + 6) = (u_angular_velocity_covariancei.base >> (8 * 6)) & 0xFF;
       *(outbuffer + offset + 7) = (u_angular_velocity_covariancei.base >> (8 * 7)) & 0xFF;
       offset += sizeof(this->angular_velocity_covariance[i]);
-      }
-      offset += this->linear_acceleration.serialize(outbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+    }
+    offset += this->linear_acceleration.serialize(outbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
+    {
+      union
+      {
         double real;
         uint64_t base;
       } u_linear_acceleration_covariancei;
@@ -92,75 +97,85 @@ namespace sensor_msgs
       *(outbuffer + offset + 6) = (u_linear_acceleration_covariancei.base >> (8 * 6)) & 0xFF;
       *(outbuffer + offset + 7) = (u_linear_acceleration_covariancei.base >> (8 * 7)) & 0xFF;
       offset += sizeof(this->linear_acceleration_covariance[i]);
-      }
-      return offset;
     }
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    offset += this->header.deserialize(inbuffer + offset);
+    offset += this->orientation.deserialize(inbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
     {
-      int offset = 0;
-      offset += this->header.deserialize(inbuffer + offset);
-      offset += this->orientation.deserialize(inbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_orientation_covariancei;
       u_orientation_covariancei.base = 0;
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      u_orientation_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 0))) << (8 * 0);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 1))) << (8 * 1);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 2))) << (8 * 2);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 3))) << (8 * 3);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 4))) << (8 * 4);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 5))) << (8 * 5);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 6))) << (8 * 6);
+      u_orientation_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 7))) << (8 * 7);
       this->orientation_covariance[i] = u_orientation_covariancei.real;
       offset += sizeof(this->orientation_covariance[i]);
-      }
-      offset += this->angular_velocity.deserialize(inbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+    }
+    offset += this->angular_velocity.deserialize(inbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
+    {
+      union
+      {
         double real;
         uint64_t base;
       } u_angular_velocity_covariancei;
       u_angular_velocity_covariancei.base = 0;
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      u_angular_velocity_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 0))) << (8 * 0);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 1))) << (8 * 1);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 2))) << (8 * 2);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 3))) << (8 * 3);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 4))) << (8 * 4);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 5))) << (8 * 5);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 6))) << (8 * 6);
+      u_angular_velocity_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 7))) << (8 * 7);
       this->angular_velocity_covariance[i] = u_angular_velocity_covariancei.real;
       offset += sizeof(this->angular_velocity_covariance[i]);
-      }
-      offset += this->linear_acceleration.deserialize(inbuffer + offset);
-      for( uint32_t i = 0; i < 9; i++){
-      union {
+    }
+    offset += this->linear_acceleration.deserialize(inbuffer + offset);
+    for (uint32_t i = 0; i < 9; i++)
+    {
+      union
+      {
         double real;
         uint64_t base;
       } u_linear_acceleration_covariancei;
       u_linear_acceleration_covariancei.base = 0;
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      u_linear_acceleration_covariancei.base |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 0))) << (8 * 0);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 1))) << (8 * 1);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 2))) << (8 * 2);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 3))) << (8 * 3);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 4))) << (8 * 4);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 5))) << (8 * 5);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 6))) << (8 * 6);
+      u_linear_acceleration_covariancei.base |= ((uint64_t)(*(inbuffer + offset + 7))) << (8 * 7);
       this->linear_acceleration_covariance[i] = u_linear_acceleration_covariancei.real;
       offset += sizeof(this->linear_acceleration_covariance[i]);
-      }
-     return offset;
     }
+    return offset;
+  }
 
-    const char * getType(){ return "sensor_msgs/Imu"; };
-    const char * getMD5(){ return "6a62c6daae103f4ff57a132d6f95cec2"; };
-
+  const char* getType()
+  {
+    return "sensor_msgs/Imu";
   };
-
+  const char* getMD5()
+  {
+    return "6a62c6daae103f4ff57a132d6f95cec2";
+  };
+};
 }
 #endif

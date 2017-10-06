@@ -15,7 +15,8 @@
 
 bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate);
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv)
+{
   ros::init(argc, argv, "gazebo_base");
 
   auto nh = ros::NodeHandle();
@@ -29,14 +30,17 @@ int main(int argc, char **argv) {
     ROS_INFO("waiting for gazebo...");
     int timeout_count = 5;
     int timeout_time = 5;
-    while (timeout_count > 0) {
-      if (ros::service::waitForService("/gazebo/spawn_urdf_model", timeout_time)) {
+    while (timeout_count > 0)
+    {
+      if (ros::service::waitForService("/gazebo/spawn_urdf_model", timeout_time))
+      {
         break;
       }
       timeout_count--;
-      ROS_INFO("/gazebo/spawn_urdf_model connection timed out, retry %d", 5-timeout_count);
+      ROS_INFO("/gazebo/spawn_urdf_model connection timed out, retry %d", 5 - timeout_count);
     }
-    if (timeout_count <= 0) {
+    if (timeout_count <= 0)
+    {
       ROS_ERROR("unable to connect to gazebo");
       return -5;
     }
@@ -44,24 +48,28 @@ int main(int argc, char **argv) {
 
   ROS_INFO("spawning model...");
   // spawn the robot model in gazebo
-  if (!SpawnModel(nh, nhPrivate)) {
+  if (!SpawnModel(nh, nhPrivate))
+  {
     ROS_ERROR("unable to spawn model");
     return -1;
   }
 
-  auto aje_client = nh.serviceClient<gazebo_msgs::ApplyJointEffort>("/gazebo/apply_joint_effort", true); 
-  auto cjf_client = nh.serviceClient<gazebo_msgs::JointRequest>("/gazebo/clear_joint_forces", true); 
-  auto gj_client = nh.serviceClient<gazebo_msgs::GetJointProperties>("/gazebo/get_joint_properties", true); 
+  auto aje_client = nh.serviceClient<gazebo_msgs::ApplyJointEffort>("/gazebo/apply_joint_effort", true);
+  auto cjf_client = nh.serviceClient<gazebo_msgs::JointRequest>("/gazebo/clear_joint_forces", true);
+  auto gj_client = nh.serviceClient<gazebo_msgs::GetJointProperties>("/gazebo/get_joint_properties", true);
 
-  if (!aje_client) {
+  if (!aje_client)
+  {
     ROS_ERROR("unable to connect to /gazebo/apply_joint_effort");
     return -3;
   }
-  if (!cjf_client) {
+  if (!cjf_client)
+  {
     ROS_ERROR("unable to connect to /gazebo/clear_joint_forces");
     return -4;
   }
-  if (!gj_client) {
+  if (!gj_client)
+  {
     ROS_ERROR("unable to connect to /gazebo/get_joint_properties");
     return -9;
   }
@@ -72,7 +80,8 @@ int main(int argc, char **argv) {
 
   auto r = ros::Rate(100);
 
-  while (ros::ok()) {
+  while (ros::ok())
+  {
     bc.PollJoints();
     ros::spinOnce();
     r.sleep();
@@ -80,19 +89,22 @@ int main(int argc, char **argv) {
 
   ros::shutdown();
 
-  while (ros::ok()) {
+  while (ros::ok())
+  {
     r.sleep();
   }
 
   return 0;
 }
 
-bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate) {
+bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
+{
   // copy the model into a string to pass into the model spawner
   std::string model_path = "";
   std::stringstream model;
 
-  if (!nhPrivate.getParam("model_path", model_path)) {
+  if (!nhPrivate.getParam("model_path", model_path))
+  {
     ROS_ERROR("no model path specified");
     ROS_ERROR("path: %s", model_path.c_str());
     return -3;
@@ -113,16 +125,22 @@ bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate) {
     sm.request.robot_namespace = "tesbot";
     // sm.request.initial_pose;
 
-    if (model_spawner.call(sm)) {
-      if (sm.response.success) {
+    if (model_spawner.call(sm))
+    {
+      if (sm.response.success)
+      {
         ROS_INFO("robot spawn successful");
         model_name = sm.request.model_name;
-      } else {
+      }
+      else
+      {
         ROS_ERROR("spawn attempt failed");
         ROS_ERROR("error message: %s", sm.response.status_message.c_str());
         return false;
       }
-    } else {
+    }
+    else
+    {
       ROS_ERROR("unable to connect to model spawner");
       return false;
     }

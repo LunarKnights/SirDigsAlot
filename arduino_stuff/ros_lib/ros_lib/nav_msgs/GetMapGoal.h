@@ -8,31 +8,33 @@
 
 namespace nav_msgs
 {
-
-  class GetMapGoal : public ros::Msg
+class GetMapGoal : public ros::Msg
+{
+public:
+  GetMapGoal()
   {
-    public:
+  }
 
-    GetMapGoal()
-    {
-    }
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      return offset;
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-     return offset;
-    }
-
-    const char * getType(){ return "nav_msgs/GetMapGoal"; };
-    const char * getMD5(){ return "d41d8cd98f00b204e9800998ecf8427e"; };
-
+  const char* getType()
+  {
+    return "nav_msgs/GetMapGoal";
   };
-
+  const char* getMD5()
+  {
+    return "d41d8cd98f00b204e9800998ecf8427e";
+  };
+};
 }
 #endif

@@ -8,22 +8,22 @@
 
 namespace shape_msgs
 {
+class Plane : public ros::Msg
+{
+public:
+  double coef[4];
 
-  class Plane : public ros::Msg
+  Plane() : coef()
   {
-    public:
-      double coef[4];
+  }
 
-    Plane():
-      coef()
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    for (uint32_t i = 0; i < 4; i++)
     {
-    }
-
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      for( uint32_t i = 0; i < 4; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_coefi;
@@ -37,37 +37,43 @@ namespace shape_msgs
       *(outbuffer + offset + 6) = (u_coefi.base >> (8 * 6)) & 0xFF;
       *(outbuffer + offset + 7) = (u_coefi.base >> (8 * 7)) & 0xFF;
       offset += sizeof(this->coef[i]);
-      }
-      return offset;
     }
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    for (uint32_t i = 0; i < 4; i++)
     {
-      int offset = 0;
-      for( uint32_t i = 0; i < 4; i++){
-      union {
+      union
+      {
         double real;
         uint64_t base;
       } u_coefi;
       u_coefi.base = 0;
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 3))) << (8 * 3);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 4))) << (8 * 4);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 5))) << (8 * 5);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 6))) << (8 * 6);
-      u_coefi.base |= ((uint64_t) (*(inbuffer + offset + 7))) << (8 * 7);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 0))) << (8 * 0);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 1))) << (8 * 1);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 2))) << (8 * 2);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 3))) << (8 * 3);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 4))) << (8 * 4);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 5))) << (8 * 5);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 6))) << (8 * 6);
+      u_coefi.base |= ((uint64_t)(*(inbuffer + offset + 7))) << (8 * 7);
       this->coef[i] = u_coefi.real;
       offset += sizeof(this->coef[i]);
-      }
-     return offset;
     }
+    return offset;
+  }
 
-    const char * getType(){ return "shape_msgs/Plane"; };
-    const char * getMD5(){ return "2c1b92ed8f31492f8e73f6a4a44ca796"; };
-
+  const char* getType()
+  {
+    return "shape_msgs/Plane";
   };
-
+  const char* getMD5()
+  {
+    return "2c1b92ed8f31492f8e73f6a4a44ca796";
+  };
+};
 }
 #endif

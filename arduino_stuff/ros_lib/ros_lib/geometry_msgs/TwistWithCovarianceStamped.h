@@ -10,41 +10,42 @@
 
 namespace geometry_msgs
 {
+class TwistWithCovarianceStamped : public ros::Msg
+{
+public:
+  typedef std_msgs::Header _header_type;
+  _header_type header;
+  typedef geometry_msgs::TwistWithCovariance _twist_type;
+  _twist_type twist;
 
-  class TwistWithCovarianceStamped : public ros::Msg
+  TwistWithCovarianceStamped() : header(), twist()
   {
-    public:
-      typedef std_msgs::Header _header_type;
-      _header_type header;
-      typedef geometry_msgs::TwistWithCovariance _twist_type;
-      _twist_type twist;
+  }
 
-    TwistWithCovarianceStamped():
-      header(),
-      twist()
-    {
-    }
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    offset += this->header.serialize(outbuffer + offset);
+    offset += this->twist.serialize(outbuffer + offset);
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      offset += this->header.serialize(outbuffer + offset);
-      offset += this->twist.serialize(outbuffer + offset);
-      return offset;
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    offset += this->header.deserialize(inbuffer + offset);
+    offset += this->twist.deserialize(inbuffer + offset);
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-      offset += this->header.deserialize(inbuffer + offset);
-      offset += this->twist.deserialize(inbuffer + offset);
-     return offset;
-    }
-
-    const char * getType(){ return "geometry_msgs/TwistWithCovarianceStamped"; };
-    const char * getMD5(){ return "8927a1a12fb2607ceea095b2dc440a96"; };
-
+  const char* getType()
+  {
+    return "geometry_msgs/TwistWithCovarianceStamped";
   };
-
+  const char* getMD5()
+  {
+    return "8927a1a12fb2607ceea095b2dc440a96";
+  };
+};
 }
 #endif

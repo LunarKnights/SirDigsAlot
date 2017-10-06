@@ -18,7 +18,8 @@
 #include "common.h"
 #include "PIDController.h"
 
-class BaseController {
+class BaseController
+{
   friend class PIDController;
 
 protected:
@@ -28,7 +29,7 @@ protected:
   ros::ServiceClient &moveJoints, &clearJoints, &getJoints;
 
 public:
-  BaseController(ros::ServiceClient &mj, ros::ServiceClient &cj, ros::ServiceClient &gj);
+  BaseController(ros::ServiceClient& mj, ros::ServiceClient& cj, ros::ServiceClient& gj);
 
   void ControllerCallback(const geometry_msgs::Twist& t);
 

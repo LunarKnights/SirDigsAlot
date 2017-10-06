@@ -7,64 +7,71 @@
 
 namespace std_srvs
 {
-
 static const char EMPTY[] = "std_srvs/Empty";
 
-  class EmptyRequest : public ros::Msg
+class EmptyRequest : public ros::Msg
+{
+public:
+  EmptyRequest()
   {
-    public:
+  }
 
-    EmptyRequest()
-    {
-    }
-
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      return offset;
-    }
-
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-     return offset;
-    }
-
-    const char * getType(){ return EMPTY; };
-    const char * getMD5(){ return "d41d8cd98f00b204e9800998ecf8427e"; };
-
-  };
-
-  class EmptyResponse : public ros::Msg
+  virtual int serialize(unsigned char* outbuffer) const
   {
-    public:
+    int offset = 0;
+    return offset;
+  }
 
-    EmptyResponse()
-    {
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      return offset;
-    }
-
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-     return offset;
-    }
-
-    const char * getType(){ return EMPTY; };
-    const char * getMD5(){ return "d41d8cd98f00b204e9800998ecf8427e"; };
-
+  const char* getType()
+  {
+    return EMPTY;
   };
-
-  class Empty {
-    public:
-    typedef EmptyRequest Request;
-    typedef EmptyResponse Response;
+  const char* getMD5()
+  {
+    return "d41d8cd98f00b204e9800998ecf8427e";
   };
+};
 
+class EmptyResponse : public ros::Msg
+{
+public:
+  EmptyResponse()
+  {
+  }
+
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    return offset;
+  }
+
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    return offset;
+  }
+
+  const char* getType()
+  {
+    return EMPTY;
+  };
+  const char* getMD5()
+  {
+    return "d41d8cd98f00b204e9800998ecf8427e";
+  };
+};
+
+class Empty
+{
+public:
+  typedef EmptyRequest Request;
+  typedef EmptyResponse Response;
+};
 }
 #endif

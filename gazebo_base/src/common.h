@@ -21,18 +21,10 @@ constexpr char kLinkLeftFrontName[] = "tesbot::left_front_wheel";
 constexpr char kLinkRightBackName[] = "tesbot::right_back_wheel";
 constexpr char kLinkRightFrontName[] = "tesbot::right_front_wheel";
 
-constexpr const char* kJointNames[kNumJoints] = {
-    kJointLeftFrontName,
-    kJointLeftBackName,
-    kJointRightFrontName,
-    kJointRightBackName
-};
-constexpr const char* kLinkNames[kNumJoints] = {
-    kLinkLeftFrontName,
-    kLinkLeftBackName,
-    kLinkRightFrontName,
-    kLinkRightBackName
-};
+constexpr const char* kJointNames[kNumJoints] = { kJointLeftFrontName, kJointLeftBackName, kJointRightFrontName,
+                                                  kJointRightBackName };
+constexpr const char* kLinkNames[kNumJoints] = { kLinkLeftFrontName, kLinkLeftBackName, kLinkRightFrontName,
+                                                 kLinkRightBackName };
 
 class BaseController;
 class PIDController;

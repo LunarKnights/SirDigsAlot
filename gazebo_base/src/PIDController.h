@@ -10,24 +10,31 @@
 
 constexpr int kMaxForceNum = 5;
 
-class PIDController {
+class PIDController
+{
 public:
   float desiredVel, curVel;
   float desiredForce;
 
   int idx;
+
 protected:
   float curForce;
   int nForceApplications;
 
-  BaseController *parent;
-public:
-  PIDController(BaseController* p, int idx): 
-    parent(p), idx(idx), nForceApplications(0),
-    desiredVel(0.0f), curVel(0.0f), desiredForce(0.0f), curForce(0.0f) {}
+  BaseController* parent;
 
-  PIDController(): PIDController(nullptr, 0) {}
-  PIDController(const PIDController& other): PIDController(other.parent, other.idx) {
+public:
+  PIDController(BaseController* p, int idx)
+    : parent(p), idx(idx), nForceApplications(0), desiredVel(0.0f), curVel(0.0f), desiredForce(0.0f), curForce(0.0f)
+  {
+  }
+
+  PIDController() : PIDController(nullptr, 0)
+  {
+  }
+  PIDController(const PIDController& other) : PIDController(other.parent, other.idx)
+  {
     desiredVel = other.desiredVel;
     curVel = other.curVel;
     desiredForce = other.desiredForce;
@@ -35,7 +42,8 @@ public:
     nForceApplications = other.nForceApplications;
   }
 
-  PIDController& operator=(const PIDController& other) {
+  PIDController& operator=(const PIDController& other)
+  {
     parent = other.parent;
     idx = other.idx;
 

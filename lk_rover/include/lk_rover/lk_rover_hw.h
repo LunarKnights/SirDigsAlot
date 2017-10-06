@@ -10,15 +10,16 @@
 
 #include "lk_rover/lk_hw.h"
 
-class LKRoverHW: public LKHW {
+class LKRoverHW : public LKHW
+{
 public:
   LKRoverHW(ros::NodeHandle nh);
 
-  void setPWMs(const std::array<double, kNumWheels>&,
-      double dumpA, double dumpB, double ladderA, double ladderB, double spin, double flap);
-  void getCount(std::array<double, kNumWheels>&,
-      double &dumpA, double &dumpB, double &ladderA, double &ladderB);
+  void setPWMs(const std::array<double, kNumWheels>&, double dumpA, double dumpB, double ladderA, double ladderB,
+               double spin, double flap);
+  void getCount(std::array<double, kNumWheels>&, double& dumpA, double& dumpB, double& ladderA, double& ladderB);
   void waitForSerial();
+
 private:
   void encoderCb(const lk_rover::AllEncoders&);
   ros::NodeHandle nh;

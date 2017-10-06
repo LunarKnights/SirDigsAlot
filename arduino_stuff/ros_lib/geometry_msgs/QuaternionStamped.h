@@ -10,41 +10,42 @@
 
 namespace geometry_msgs
 {
+class QuaternionStamped : public ros::Msg
+{
+public:
+  typedef std_msgs::Header _header_type;
+  _header_type header;
+  typedef geometry_msgs::Quaternion _quaternion_type;
+  _quaternion_type quaternion;
 
-  class QuaternionStamped : public ros::Msg
+  QuaternionStamped() : header(), quaternion()
   {
-    public:
-      typedef std_msgs::Header _header_type;
-      _header_type header;
-      typedef geometry_msgs::Quaternion _quaternion_type;
-      _quaternion_type quaternion;
+  }
 
-    QuaternionStamped():
-      header(),
-      quaternion()
-    {
-    }
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    offset += this->header.serialize(outbuffer + offset);
+    offset += this->quaternion.serialize(outbuffer + offset);
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      offset += this->header.serialize(outbuffer + offset);
-      offset += this->quaternion.serialize(outbuffer + offset);
-      return offset;
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    offset += this->header.deserialize(inbuffer + offset);
+    offset += this->quaternion.deserialize(inbuffer + offset);
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-      offset += this->header.deserialize(inbuffer + offset);
-      offset += this->quaternion.deserialize(inbuffer + offset);
-     return offset;
-    }
-
-    const char * getType(){ return "geometry_msgs/QuaternionStamped"; };
-    const char * getMD5(){ return "e57f1e547e0e1fd13504588ffc8334e2"; };
-
+  const char* getType()
+  {
+    return "geometry_msgs/QuaternionStamped";
   };
-
+  const char* getMD5()
+  {
+    return "e57f1e547e0e1fd13504588ffc8334e2";
+  };
+};
 }
 #endif

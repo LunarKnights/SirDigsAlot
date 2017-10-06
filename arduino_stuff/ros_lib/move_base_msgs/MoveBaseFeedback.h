@@ -9,36 +9,38 @@
 
 namespace move_base_msgs
 {
+class MoveBaseFeedback : public ros::Msg
+{
+public:
+  typedef geometry_msgs::PoseStamped _base_position_type;
+  _base_position_type base_position;
 
-  class MoveBaseFeedback : public ros::Msg
+  MoveBaseFeedback() : base_position()
   {
-    public:
-      typedef geometry_msgs::PoseStamped _base_position_type;
-      _base_position_type base_position;
+  }
 
-    MoveBaseFeedback():
-      base_position()
-    {
-    }
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    offset += this->base_position.serialize(outbuffer + offset);
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      offset += this->base_position.serialize(outbuffer + offset);
-      return offset;
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    offset += this->base_position.deserialize(inbuffer + offset);
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-      offset += this->base_position.deserialize(inbuffer + offset);
-     return offset;
-    }
-
-    const char * getType(){ return "move_base_msgs/MoveBaseFeedback"; };
-    const char * getMD5(){ return "3fb824c456a757373a226f6d08071bf0"; };
-
+  const char* getType()
+  {
+    return "move_base_msgs/MoveBaseFeedback";
   };
-
+  const char* getMD5()
+  {
+    return "3fb824c456a757373a226f6d08071bf0";
+  };
+};
 }
 #endif

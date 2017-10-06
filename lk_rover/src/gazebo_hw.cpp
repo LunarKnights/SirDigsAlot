@@ -13,26 +13,32 @@ constexpr int kMaxForceNum = 8;
 /// This is the hardware interface for controlling the gazebo model of the
 /// robot
 /// It uses different ROS services gazebo exposes to control the joints in
-/// the simulation, as well as to generate data for the encoders by 
+/// the simulation, as well as to generate data for the encoders by
 /// getting the current orientation of the wheels
-GazeboHW::GazeboHW(): curEfforts{}, numEfforts{} {}
+GazeboHW::GazeboHW() : curEfforts{}, numEfforts{}
+{
+}
 
-bool GazeboHW::init(ros::NodeHandle &nh) {
+bool GazeboHW::init(ros::NodeHandle& nh)
+{
   /// Set up the different service objects, and fail if any of them aren't
   /// set up successfully
   mj = nh.serviceClient<gazebo_msgs::ApplyJointEffort>("/gazebo/apply_joint_effort", true);
   cj = nh.serviceClient<gazebo_msgs::JointRequest>("/gazebo/clear_joint_forces", true);
   gj = nh.serviceClient<gazebo_msgs::GetJointProperties>("/gazebo/get_joint_properties", true);
 
-  if (!mj) {
+  if (!mj)
+  {
     ROS_ERROR("unable to connect to /gazebo/apply_joint_effort");
     return false;
   }
-  if (!cj) {
+  if (!cj)
+  {
     ROS_ERROR("unable to connect to /gazebo/clear_joint_forces");
     return false;
   }
-  if (!gj) {
+  if (!gj)
+  {
     ROS_ERROR("unable to connect to /gazebo/get_joint_properties");
     return false;
   }
@@ -40,18 +46,22 @@ bool GazeboHW::init(ros::NodeHandle &nh) {
 }
 
 /// This sends PWM commands to the virtal joints
-void GazeboHW::setPWMs(const std::array<double, kNumWheels>& newEfforts,
-    double dumpA, double dumpB, double ladderA, double ladderB, double spin, double flap) {
+void GazeboHW::setPWMs(const std::array<double, kNumWheels>& newEfforts, double dumpA, double dumpB, double ladderA,
+                       double ladderB, double spin, double flap)
+{
   // TODO: set up the nonwheel actuators
-  ROS_INFO("GazeboHW::setPWMs %f %f %f %f",
-      newEfforts[0], newEfforts[1], newEfforts[2], newEfforts[3]);
-  for (int i = 0; i < kNumWheels; ++i) {
+  ROS_INFO("GazeboHW::setPWMs %f %f %f %f", newEfforts[0], newEfforts[1], newEfforts[2], newEfforts[3]);
+  for (int i = 0; i < kNumWheels; ++i)
+  {
     /// First it clips the input wheel spin so that there's an upper limit on
     /// how fast the wheels can go, like it is in real life
     double clippedEfforts = newEfforts[i];
-    if (newEfforts[i] > kMaxTorque) {
+    if (newEfforts[i] > kMaxTorque)
+    {
       clippedEfforts = kMaxTorque;
-    } else if (newEfforts[i] < -kMaxTorque) {
+    }
+    else if (newEfforts[i] < -kMaxTorque)
+    {
       clippedEfforts = -kMaxTorque;
     }
     /// gazebo doesn't allow you to directly set the torque
@@ -72,13 +82,16 @@ void GazeboHW::setPWMs(const std::array<double, kNumWheels>& newEfforts,
 
     /// We keep track of what the current torque in gazebo is using curEfforts
     /// and the number of torque orders gazebo has received with numEfforts
-    if (std::abs(clippedEfforts - curEfforts[i]) > kForceTol) {
+    if (std::abs(clippedEfforts - curEfforts[i]) > kForceTol)
+    {
       /// This code does the clear force job call if we reach the threshold
       /// for a given joint
-      if (numEfforts[i] > kMaxForceNum) {
+      if (numEfforts[i] > kMaxForceNum)
+      {
         gazebo_msgs::JointRequest cjf;
         cjf.request.joint_name = kWheelNames[i];
-        if (!cj.call(cjf)) {
+        if (!cj.call(cjf))
+        {
           ROS_WARN("GazeboHW::setPWMs: clear force %d failed", i);
           continue;
         }
@@ -91,11 +104,13 @@ void GazeboHW::setPWMs(const std::array<double, kNumWheels>& newEfforts,
       aje.request.effort = deltaForce;
       /// A duration less than zero means indefinitely
       aje.request.duration = ros::Duration(-0.1f);
-      if (!mj.call(aje)) {
+      if (!mj.call(aje))
+      {
         continue;
-      } else if (!aje.response.success) {
-        ROS_WARN("GazeboHW::setPWMs: %d aje request failed with %s",
-            i, aje.response.status_message.c_str());
+      }
+      else if (!aje.response.success)
+      {
+        ROS_WARN("GazeboHW::setPWMs: %d aje request failed with %s", i, aje.response.status_message.c_str());
         continue;
       }
       curEfforts[i] += deltaForce;
@@ -106,24 +121,26 @@ void GazeboHW::setPWMs(const std::array<double, kNumWheels>& newEfforts,
 
 /// This is how we get the current encoder count from gazebo
 /// We just copy the value from the joint properties
-void GazeboHW::getCount(std::array<double, kNumWheels>& count,
-    double &dumpA, double& dumpB, double &ladderA, double &ladderB) {
+void GazeboHW::getCount(std::array<double, kNumWheels>& count, double& dumpA, double& dumpB, double& ladderA,
+                        double& ladderB)
+{
   // TODO: set up the nonwheel actuators
-  for (auto i = 0; i < kNumWheels; ++i) {
+  for (auto i = 0; i < kNumWheels; ++i)
+  {
     gazebo_msgs::GetJointProperties gjp;
 
     gjp.request.joint_name = kWheelNames[i];
-    if (!gj.call(gjp)) {
+    if (!gj.call(gjp))
+    {
       ROS_WARN("GazeboHW::getCount get joints %d call failed", i);
       continue;
     }
-    if (!gjp.response.success) {
-      ROS_WARN("GazeboHW::getCount get joints %d call failed: %s", i,
-          gjp.response.status_message.c_str());
+    if (!gjp.response.success)
+    {
+      ROS_WARN("GazeboHW::getCount get joints %d call failed: %s", i, gjp.response.status_message.c_str());
       continue;
     }
     // ROS_INFO("position %d, %f", i, gjp.response.position[0]);
     count[i] = gjp.response.position[0];
   }
 }
-

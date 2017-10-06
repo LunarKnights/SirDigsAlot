@@ -11,11 +11,13 @@
 #include "lk_rover/common.h"
 #include "lk_rover/lk_hw.h"
 
-struct ActuatorConfig {
+struct ActuatorConfig
+{
   double min, max, gain;
 };
 
-struct ActuatorConfigs {
+struct ActuatorConfigs
+{
   ActuatorConfig left, right;
   double diffGain;
   double length;
@@ -26,22 +28,27 @@ struct ActuatorConfigs {
 /// This basically is used to simulate a "virtual" actuator for ROS to actuate,
 /// which will then be used to control two physical actuators
 /// ActuatorConfig is used to allow for some amount of configuration
-class TwinJoints {
+class TwinJoints
+{
 public:
   const ActuatorConfig a, b;
   const double diffGain;
   const double length;
 
-  TwinJoints(const ActuatorConfigs &);
-  ~TwinJoints() {}
+  TwinJoints(const ActuatorConfigs&);
+  ~TwinJoints()
+  {
+  }
 
   double getProcessedEncoder(double inA, double inB);
-  void getProcessedPwms(double pwm, double &outA, double &outB);
+  void getProcessedPwms(double pwm, double& outA, double& outB);
+
 private:
   double lastA, lastB;
 };
 
-class LKRover: public hardware_interface::RobotHW {
+class LKRover : public hardware_interface::RobotHW
+{
 public:
   LKRover(std::shared_ptr<LKHW> hw_, ActuatorConfigs& dump, ActuatorConfigs& ladder);
   ~LKRover();
@@ -50,6 +57,7 @@ public:
   void read();
   void killMotors();
   void unkillMotors();
+
 private:
   bool killed;
   TwinJoints virtualDump, virtualLadder;

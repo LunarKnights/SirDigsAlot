@@ -60,11 +60,13 @@ bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate);
 /// heartbeat happens before the next loop of the program. If we don't detect a
 /// heartbeat for some specified number of loops, we stop the robot
 std::atomic<bool> receivedHeartbeat(false);
-void teleopHeartCb(const std_msgs::Bool &b) {
+void teleopHeartCb(const std_msgs::Bool& b)
+{
   receivedHeartbeat.store(true);
 };
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
   /// At the top of any ROS program, you'll probably need to call ros::init
   ros::init(argc, argv, "lk_rover_base");
 
@@ -84,19 +86,23 @@ int main(int argc, char** argv) {
   bool useGazebo = false;
   nhPrivate.param<bool>("use_gazebo", useGazebo, false);
 
-  if (useGazebo) {
+  if (useGazebo)
+  {
     /// If it is using gazebo, then it waits for gazebo to initialize...
     ROS_INFO("waiting for gazebo...");
     int timeout_count = 5;
     int timeout_time = 5;
-    while (timeout_count > 0) {
-      if (ros::service::waitForService("/gazebo/spawn_urdf_model", timeout_time)) {
+    while (timeout_count > 0)
+    {
+      if (ros::service::waitForService("/gazebo/spawn_urdf_model", timeout_time))
+      {
         break;
       }
       timeout_count--;
-      ROS_INFO("/gazebo/spawn_urdf_model connection timed out, retry %d", 5-timeout_count);
+      ROS_INFO("/gazebo/spawn_urdf_model connection timed out, retry %d", 5 - timeout_count);
     }
-    if (timeout_count <= 0) {
+    if (timeout_count <= 0)
+    {
       ROS_ERROR("unable to connect to gazebo");
       return -5;
     }
@@ -104,19 +110,23 @@ int main(int argc, char** argv) {
     /// ...spawns the robot model into gazebo...
     ROS_INFO("spawning model...");
     // spawn the robot model in gazebo
-    if (!SpawnModel(nh, nhPrivate)) {
+    if (!SpawnModel(nh, nhPrivate))
+    {
       ROS_ERROR("unable to spawn model");
       return -1;
     }
 
     /// ... and then stores the gazebo motor object in the shared_ptr
     auto gazeboHW = std::make_shared<GazeboHW>();
-    if(!gazeboHW->init(nh)) {
+    if (!gazeboHW->init(nh))
+    {
       ROS_ERROR("gazebo hw init failed");
       return -8;
     }
     hw = gazeboHW;
-  } else {
+  }
+  else
+  {
 #endif
     /// Otherwise just make the normal hardware object and put it in the pointer
     hw = std::make_shared<LKRoverHW>(nh);
@@ -126,90 +136,105 @@ int main(int argc, char** argv) {
   }
 #endif
 
-  /// Now we'll set up the configuration for the custom PID 
+  /// Now we'll set up the configuration for the custom PID
   /// These are for ensuring the two motors for the ladder
   /// and the bucket remain basically in the same position,
   /// as well as for using the calibration values for the
   /// string potentiometers
-  ActuatorConfigs dumpConfigs = {0}, ladderConfigs = {0};
+  ActuatorConfigs dumpConfigs = { 0 }, ladderConfigs = { 0 };
 
   /// Basically copy data from ROS, and fail if anything's missing
   bool configFail = false;
-  if (!nh.getParam("dump/left/min", dumpConfigs.left.min)) {
+  if (!nh.getParam("dump/left/min", dumpConfigs.left.min))
+  {
     ROS_ERROR("unable to find dump left min");
     configFail = true;
   }
-  if (!nh.getParam("dump/left/max", dumpConfigs.left.max)) {
+  if (!nh.getParam("dump/left/max", dumpConfigs.left.max))
+  {
     ROS_ERROR("unable to find dump left max");
     configFail = true;
   }
-  if (!nh.getParam("dump/left/gain", dumpConfigs.left.gain)) {
+  if (!nh.getParam("dump/left/gain", dumpConfigs.left.gain))
+  {
     ROS_ERROR("unable to find dump left gain");
     configFail = true;
   }
-  if (!nh.getParam("dump/right/min", dumpConfigs.right.min)) {
+  if (!nh.getParam("dump/right/min", dumpConfigs.right.min))
+  {
     ROS_ERROR("unable to find dump right min");
     configFail = true;
   }
-  if (!nh.getParam("dump/right/max", dumpConfigs.right.max)) {
+  if (!nh.getParam("dump/right/max", dumpConfigs.right.max))
+  {
     ROS_ERROR("unable to find dump left max");
     configFail = true;
   }
-  if (!nh.getParam("dump/right/gain", dumpConfigs.right.gain)) {
+  if (!nh.getParam("dump/right/gain", dumpConfigs.right.gain))
+  {
     ROS_ERROR("unable to find dump right gain");
     configFail = true;
   }
-  if (!nh.getParam("dump/diff_gain", dumpConfigs.diffGain)) {
+  if (!nh.getParam("dump/diff_gain", dumpConfigs.diffGain))
+  {
     ROS_ERROR("unable to find dump diff gain");
     configFail = true;
   }
-  if (!nh.getParam("dump/length", dumpConfigs.length)) {
+  if (!nh.getParam("dump/length", dumpConfigs.length))
+  {
     ROS_ERROR("unable to find dump diff length");
     configFail = true;
   }
-  ROS_INFO("dump params: %lf %lf %lf %lf %lf %lf %lf", 
-    dumpConfigs.left.min, dumpConfigs.left.max, dumpConfigs.left.gain,
-    dumpConfigs.right.min, dumpConfigs.right.max, dumpConfigs.right.gain,
-    dumpConfigs.diffGain);
+  ROS_INFO("dump params: %lf %lf %lf %lf %lf %lf %lf", dumpConfigs.left.min, dumpConfigs.left.max,
+           dumpConfigs.left.gain, dumpConfigs.right.min, dumpConfigs.right.max, dumpConfigs.right.gain,
+           dumpConfigs.diffGain);
 
-  if (!nh.getParam("ladder/left/min", ladderConfigs.left.min)) {
+  if (!nh.getParam("ladder/left/min", ladderConfigs.left.min))
+  {
     ROS_ERROR("unable to find ladder left min");
     configFail = true;
   }
-  if (!nh.getParam("ladder/left/max", ladderConfigs.left.max)) {
+  if (!nh.getParam("ladder/left/max", ladderConfigs.left.max))
+  {
     ROS_ERROR("unable to find ladder left max");
     configFail = true;
   }
-  if (!nh.getParam("ladder/left/gain", ladderConfigs.left.gain)) {
+  if (!nh.getParam("ladder/left/gain", ladderConfigs.left.gain))
+  {
     ROS_ERROR("unable to find ladder left gain");
     configFail = true;
   }
-  if (!nh.getParam("ladder/right/min", ladderConfigs.right.min)) {
+  if (!nh.getParam("ladder/right/min", ladderConfigs.right.min))
+  {
     ROS_ERROR("unable to find ladder right min");
     configFail = true;
   }
-  if (!nh.getParam("ladder/right/max", ladderConfigs.right.max)) {
+  if (!nh.getParam("ladder/right/max", ladderConfigs.right.max))
+  {
     ROS_ERROR("unable to find ladder left max");
     configFail = true;
   }
-  if (!nh.getParam("ladder/right/gain", ladderConfigs.right.gain)) {
+  if (!nh.getParam("ladder/right/gain", ladderConfigs.right.gain))
+  {
     ROS_ERROR("unable to find ladder right gain");
     configFail = true;
   }
-  if (!nh.getParam("ladder/diff_gain", ladderConfigs.diffGain)) {
+  if (!nh.getParam("ladder/diff_gain", ladderConfigs.diffGain))
+  {
     ROS_ERROR("unable to find ladder diff gain");
     configFail = true;
   }
-  if (!nh.getParam("ladder/length", ladderConfigs.length)) {
+  if (!nh.getParam("ladder/length", ladderConfigs.length))
+  {
     ROS_ERROR("unable to find ladder diff length");
     configFail = true;
   }
-  ROS_INFO("ladder params: %lf %lf %lf %lf %lf %lf %lf", 
-    ladderConfigs.left.min, ladderConfigs.left.max, ladderConfigs.left.gain,
-    ladderConfigs.right.min, ladderConfigs.right.max, ladderConfigs.right.gain,
-    ladderConfigs.diffGain);
+  ROS_INFO("ladder params: %lf %lf %lf %lf %lf %lf %lf", ladderConfigs.left.min, ladderConfigs.left.max,
+           ladderConfigs.left.gain, ladderConfigs.right.min, ladderConfigs.right.max, ladderConfigs.right.gain,
+           ladderConfigs.diffGain);
 
-  if (configFail) exit(-1);
+  if (configFail)
+    exit(-1);
 
   /// Make the LKRover object
   /// This is what ROS's ros_controllers library talks to to do all
@@ -274,17 +299,21 @@ int main(int argc, char** argv) {
     auto r = ros::Rate(50);
     auto curTime = ros::Time::now();
     /// Basically this just loops continuously
-    while (running) {
+    while (running)
+    {
       /// Sleeping so that it runs at ~50 Hz
       r.sleep();
       /// Getting data from the encoders
       robot.read();
       /// And then, based on the various flags, either
-      if (!killMotors) {
+      if (!killMotors)
+      {
         /// (1) run the controller
         robot.unkillMotors();
         cm.update(curTime, r.cycleTime());
-      } else {
+      }
+      else
+      {
         /// or (2) stop the motors
         robot.killMotors();
       }
@@ -296,17 +325,10 @@ int main(int argc, char** argv) {
 
   /// Now we start all the different controllers
   auto toStart = std::vector<std::string>{
-    "lk_velocity_controller",
-    "lk_dump_controller",
-    "lk_ladder_controller",
-    "lk_spin_controller",
-    "lk_flap_controller",
+    "lk_velocity_controller", "lk_dump_controller", "lk_ladder_controller", "lk_spin_controller", "lk_flap_controller",
   };
   auto toStop = std::vector<std::string>{};
-  cm.switchController(
-      toStart,
-      toStop,
-      2); // STRICT
+  cm.switchController(toStart, toStop, 2);  // STRICT
 
   /// Here we create the LKController object
   /// This is where all the finite state machine logic and stuff would've happened
@@ -321,25 +343,33 @@ int main(int argc, char** argv) {
   /// for the robot to automatically kill the motors
   const int kTimeoutTime = 20;
   auto teleopTimeout = kTimeoutTime;
-  while (ros::ok()) {
+  while (ros::ok())
+  {
     r.sleep();
     /// If it's in not telop mode, it'll allow the LKController object to
     /// to do stuff
-    if (!teleopMode) {
+    if (!teleopMode)
+    {
       master.doStuff();
-    } else {
+    }
+    else
+    {
       /// Otherwise, it'll do the teleop logic, which is to
       /// check for a heartbeat
-      if (!receivedHeartbeat) {
+      if (!receivedHeartbeat)
+      {
         /// decrement the timeout if it's not detected
         --teleopTimeout;
-      } else {
+      }
+      else
+      {
         /// reset the timeout count if it is
         teleopTimeout = kTimeoutTime;
         killMotors.store(false);
       }
       /// And if the timeout reaches zero kill the motors
-      if (teleopTimeout == 0) {
+      if (teleopTimeout == 0)
+      {
         ROS_WARN("teleop connection loss detected; killing motors");
         killMotors.store(true);
       }
@@ -350,7 +380,8 @@ int main(int argc, char** argv) {
       /// or whatever
     }
     /// Enter teleoperation mode if a heartbeat's detected
-    if (receivedHeartbeat) {
+    if (receivedHeartbeat)
+    {
       teleopMode = true;
     }
     /// Then reset the variable so it can be set again if another heartbeat happens
@@ -369,13 +400,15 @@ int main(int argc, char** argv) {
 
 #if USE_GAZEBO
 /// This is code for spawning a model in gazebo, as the name implies
-bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate) {
+bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
+{
   // copy the model into a string to pass into the model spawner
   std::string model_path = "";
   std::stringstream model;
 
   /// Get the path from rosparams stuff
-  if (!nhPrivate.getParam("model_path", model_path)) {
+  if (!nhPrivate.getParam("model_path", model_path))
+  {
     ROS_ERROR("no model path specified");
     ROS_ERROR("path: %s", model_path.c_str());
     return -3;
@@ -406,16 +439,22 @@ bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate) {
 
     /// Then call the spawner to make the model and check the response to see
     /// if it worked
-    if (model_spawner.call(sm)) {
-      if (sm.response.success) {
+    if (model_spawner.call(sm))
+    {
+      if (sm.response.success)
+      {
         ROS_INFO("robot spawn successful");
         model_name = sm.request.model_name;
-      } else {
+      }
+      else
+      {
         ROS_ERROR("spawn attempt failed");
         ROS_ERROR("error message: %s", sm.response.status_message.c_str());
         return false;
       }
-    } else {
+    }
+    else
+    {
       ROS_ERROR("unable to connect to model spawner");
       return false;
     }

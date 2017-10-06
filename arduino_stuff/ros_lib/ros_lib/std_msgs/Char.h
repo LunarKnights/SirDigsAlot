@@ -8,38 +8,40 @@
 
 namespace std_msgs
 {
+class Char : public ros::Msg
+{
+public:
+  typedef uint8_t _data_type;
+  _data_type data;
 
-  class Char : public ros::Msg
+  Char() : data(0)
   {
-    public:
-      typedef uint8_t _data_type;
-      _data_type data;
+  }
 
-    Char():
-      data(0)
-    {
-    }
+  virtual int serialize(unsigned char* outbuffer) const
+  {
+    int offset = 0;
+    *(outbuffer + offset + 0) = (this->data >> (8 * 0)) & 0xFF;
+    offset += sizeof(this->data);
+    return offset;
+  }
 
-    virtual int serialize(unsigned char *outbuffer) const
-    {
-      int offset = 0;
-      *(outbuffer + offset + 0) = (this->data >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->data);
-      return offset;
-    }
+  virtual int deserialize(unsigned char* inbuffer)
+  {
+    int offset = 0;
+    this->data = ((uint8_t)(*(inbuffer + offset)));
+    offset += sizeof(this->data);
+    return offset;
+  }
 
-    virtual int deserialize(unsigned char *inbuffer)
-    {
-      int offset = 0;
-      this->data =  ((uint8_t) (*(inbuffer + offset)));
-      offset += sizeof(this->data);
-     return offset;
-    }
-
-    const char * getType(){ return "std_msgs/Char"; };
-    const char * getMD5(){ return "1bf77f25acecdedba0e224b162199717"; };
-
+  const char* getType()
+  {
+    return "std_msgs/Char";
   };
-
+  const char* getMD5()
+  {
+    return "1bf77f25acecdedba0e224b162199717";
+  };
+};
 }
 #endif
