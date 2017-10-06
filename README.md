@@ -1,7 +1,7 @@
-# LKRoverApp
-The primary code for controlling the Lunar Knights Mars Mining Robot.
+# SirDigsAlot
+The codebase for the Lunar Knights Mars Mining Robot.
 
-The Lunar Knights application will likely contain a few different packages.
+This contains the code for autonomy for the robot, remote teleoperation, and some facilities for testing.
 
 //Needs Update
   
