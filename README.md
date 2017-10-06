@@ -32,6 +32,15 @@ cd ~/catkin_ws
 catkin_make
 ```
 
+# Developer notes
+The code should be formatted against the ROS standard so that's everything's nice and uniform.
+The easiest way to do this is using `clang-tidy` with this guy's [formatting rules](https://github.com/davetcoleman/roscpp_code_format)
+You can add this as a precommit git so that it will automatically do all this for you by following these instructions
+
+```
+# TODO
+```
+
 
 ## Order to read files
 These are currently fully commented:
