@@ -20,7 +20,7 @@ sudo apt-get install ros-kinetic-controller_manager
 mkdir -p ~/catkin_ws
 
 # copy the repository into ~/catkin_ws/src
-git clone https://github.com/Algias/LKRoverApp.git src/
+git clone https://github.com/LunarKnights/SirDigsAlot src/
 
 # set up the catkin workspace
 cd ~/catkin_ws/src
