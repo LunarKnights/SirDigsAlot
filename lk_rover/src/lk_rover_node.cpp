@@ -27,6 +27,7 @@
 #include "lk_rover/lk_controller.h"
 #include "lk_rover/lk_rover.h"
 #include "lk_rover/lk_rover_hw.h"
+#include "lk_rover/sir_digsalot.h"
 
 /// This is a weird hack I'm using right now
 /// This disables the code for the gazebo stuff so the code will compile without
@@ -333,7 +334,7 @@ int main(int argc, char** argv)
   /// Here we create the LKController object
   /// This is where all the finite state machine logic and stuff would've happened
   /// if we finished autonomy in time
-  auto master = LKController(nh, nhPrivate);
+  auto master = SirDigsalot(nh, nhPrivate);
 
   /// Anyways, now's the main function loop that this thread will run until the
   /// robot's killed
