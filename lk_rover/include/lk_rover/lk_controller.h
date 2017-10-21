@@ -12,6 +12,9 @@ public:
   void doStuff();
 
 private:
+
+
+protected:
   ros::NodeHandle &nh, &nhPrivate;
 };
 

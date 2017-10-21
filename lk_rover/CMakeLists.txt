@@ -158,7 +158,8 @@ add_executable(lk_rover_node
   src/lk_controller.cpp
   src/lk_rover_node.cpp
   src/lk_rover.cpp
-  src/lk_rover_hw.cpp)
+  src/lk_rover_hw.cpp
+  src/sir_digsalot.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
