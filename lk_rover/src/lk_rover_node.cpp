@@ -45,8 +45,8 @@
 /// has gazebo
 #if USE_GAZEBO
 
-#include "gazebo_msgs/SpawnModel.h"
-#include "lk_rover/gazebo_hw.h"
+//gazebo #include "gazebo_msgs/SpawnModel.h"
+//gazebo #include "lk_rover/gazebo_hw.h"
 
 bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate);
 
@@ -80,14 +80,14 @@ int main(int argc, char** argv)
   /// It's set up as a pointer so that it'd be possible to swap out the gazebo
   /// and actual implementations of the hardware stuff without changing much code
   std::shared_ptr<LKHW> hw;
-#if USE_GAZEBO
+//gazebo #if USE_GAZEBO
 
   /// If the code is compiled with gazebo support, it'll check for a ROS parameter
   /// telling it whether to use gazebo
-  bool useGazebo = false;
-  nhPrivate.param<bool>("use_gazebo", useGazebo, false);
+//gazebo  bool useGazebo = false;
+//gazebo  nhPrivate.param<bool>("use_gazebo", useGazebo, false);
 
-  if (useGazebo)
+/*gazebo1 start  if (useGazebo)
   {
     /// If it is using gazebo, then it waits for gazebo to initialize...
     ROS_INFO("waiting for gazebo...");
@@ -107,18 +107,18 @@ int main(int argc, char** argv)
       ROS_ERROR("unable to connect to gazebo");
       return -5;
     }
-
+*///gazebo1 end
     /// ...spawns the robot model into gazebo...
-    ROS_INFO("spawning model...");
+//gazebo    ROS_INFO("spawning model...");
     // spawn the robot model in gazebo
-    if (!SpawnModel(nh, nhPrivate))
-    {
+//gazebo    if (!SpawnModel(nh, nhPrivate))
+/*    {
       ROS_ERROR("unable to spawn model");
       return -1;
     }
-
+*/
     /// ... and then stores the gazebo motor object in the shared_ptr
-    auto gazeboHW = std::make_shared<GazeboHW>();
+/*    auto gazeboHW = std::make_shared<GazeboHW>();
     if (!gazeboHW->init(nh))
     {
       ROS_ERROR("gazebo hw init failed");
@@ -129,13 +129,14 @@ int main(int argc, char** argv)
   else
   {
 #endif
+*/
     /// Otherwise just make the normal hardware object and put it in the pointer
     hw = std::make_shared<LKRoverHW>(nh);
     // wait for the rosserial link to connect
     dynamic_cast<LKRoverHW*>(hw.get())->waitForSerial();
-#if USE_GAZEBO
-  }
-#endif
+//gazebo #if USE_GAZEBO
+//  }
+//gazebo #endif
 
   /// Now we'll set up the configuration for the custom PID
   /// These are for ensuring the two motors for the ladder
@@ -399,9 +400,9 @@ int main(int argc, char** argv)
   return 0;
 }
 
-#if USE_GAZEBO
+//gazebo #if USE_GAZEBO
 /// This is code for spawning a model in gazebo, as the name implies
-bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
+/* gazebo bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
 {
   // copy the model into a string to pass into the model spawner
   std::string model_path = "";
@@ -463,3 +464,4 @@ bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
   return true;
 }
 #endif
+*/ //gazebo end
