@@ -29,28 +29,7 @@
 #include "lk_rover/lk_rover_hw.h"
 #include "lk_rover/sir_digsalot.h"
 
-/// This is a weird hack I'm using right now
-/// This disables the code for the gazebo stuff so the code will compile without
-/// needing gazebo installed
-/// I should probably fix this at some point..
-#undef USE_GAZEBO
-
 /// #ifdefs, if you haven't used them before, are kind of like meta-if statements
-/// If the USE_GAZEBO is defined, then the code between the #ifdef and the #endif
-/// will be compiled
-/// Contrawise, if USE_GAZEBO is not defined, then the code won't be compiled
-/// This is so that eventually, when I figure out how to set up USE_GAZEBO correctly,
-/// the build tools automatically define USE_GAZEBO when it detects gazebo on the
-/// system, so your version of the code will have gazebo support if your system
-/// has gazebo
-#if USE_GAZEBO
-
-#include "gazebo_msgs/SpawnModel.h"
-#include "lk_rover/gazebo_hw.h"
-
-bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate);
-
-#endif
 
 /// Here we set up the variable we use for checking whether the robot's still connected
 /// with the teleop device
@@ -80,62 +59,10 @@ int main(int argc, char** argv)
   /// It's set up as a pointer so that it'd be possible to swap out the gazebo
   /// and actual implementations of the hardware stuff without changing much code
   std::shared_ptr<LKHW> hw;
-#if USE_GAZEBO
-
-  /// If the code is compiled with gazebo support, it'll check for a ROS parameter
-  /// telling it whether to use gazebo
-  bool useGazebo = false;
-  nhPrivate.param<bool>("use_gazebo", useGazebo, false);
-
-  if (useGazebo)
-  {
-    /// If it is using gazebo, then it waits for gazebo to initialize...
-    ROS_INFO("waiting for gazebo...");
-    int timeout_count = 5;
-    int timeout_time = 5;
-    while (timeout_count > 0)
-    {
-      if (ros::service::waitForService("/gazebo/spawn_urdf_model", timeout_time))
-      {
-        break;
-      }
-      timeout_count--;
-      ROS_INFO("/gazebo/spawn_urdf_model connection timed out, retry %d", 5 - timeout_count);
-    }
-    if (timeout_count <= 0)
-    {
-      ROS_ERROR("unable to connect to gazebo");
-      return -5;
-    }
-
-    /// ...spawns the robot model into gazebo...
-    ROS_INFO("spawning model...");
-    // spawn the robot model in gazebo
-    if (!SpawnModel(nh, nhPrivate))
-    {
-      ROS_ERROR("unable to spawn model");
-      return -1;
-    }
-
-    /// ... and then stores the gazebo motor object in the shared_ptr
-    auto gazeboHW = std::make_shared<GazeboHW>();
-    if (!gazeboHW->init(nh))
-    {
-      ROS_ERROR("gazebo hw init failed");
-      return -8;
-    }
-    hw = gazeboHW;
-  }
-  else
-  {
-#endif
     /// Otherwise just make the normal hardware object and put it in the pointer
     hw = std::make_shared<LKRoverHW>(nh);
     // wait for the rosserial link to connect
     dynamic_cast<LKRoverHW*>(hw.get())->waitForSerial();
-#if USE_GAZEBO
-  }
-#endif
 
   /// Now we'll set up the configuration for the custom PID
   /// These are for ensuring the two motors for the ladder
@@ -351,7 +278,7 @@ int main(int argc, char** argv)
     /// to do stuff
     if (!teleopMode)
     {
-      master.doStuff();
+     master.DoStuff();
     }
     else
     {
@@ -398,68 +325,3 @@ int main(int argc, char** argv)
 
   return 0;
 }
-
-#if USE_GAZEBO
-/// This is code for spawning a model in gazebo, as the name implies
-bool SpawnModel(ros::NodeHandle& nh, ros::NodeHandle& nhPrivate)
-{
-  // copy the model into a string to pass into the model spawner
-  std::string model_path = "";
-  std::stringstream model;
-
-  /// Get the path from rosparams stuff
-  if (!nhPrivate.getParam("model_path", model_path))
-  {
-    ROS_ERROR("no model path specified");
-    ROS_ERROR("path: %s", model_path.c_str());
-    return -3;
-  }
-  ROS_INFO("opening model %s", model_path.c_str());
-  {
-    /// Open the file using an ifstream object
-    auto model_file = std::ifstream(model_path.c_str());
-    /// and then copy the model into the stringstream
-    /// Yeah C++'s syntax is kind of weird here
-    model << model_file.rdbuf();
-  }
-
-  // spawn model
-  /// Not entirely sure why model_name is here, it might be useful later
-  /// dunno
-  std::string model_name = "";
-  {
-    /// Set up a service client to talk to the gazebo model spawning service
-    auto model_spawner = nh.serviceClient<gazebo_msgs::SpawnModel>("/gazebo/spawn_urdf_model");
-    /// Create the request/response object thing
-    gazebo_msgs::SpawnModel sm;
-    /// And copy the right things into it
-    sm.request.model_name = "tesbot";
-    sm.request.model_xml = model.str();
-    sm.request.robot_namespace = "tesbot";
-    // sm.request.initial_pose;
-
-    /// Then call the spawner to make the model and check the response to see
-    /// if it worked
-    if (model_spawner.call(sm))
-    {
-      if (sm.response.success)
-      {
-        ROS_INFO("robot spawn successful");
-        model_name = sm.request.model_name;
-      }
-      else
-      {
-        ROS_ERROR("spawn attempt failed");
-        ROS_ERROR("error message: %s", sm.response.status_message.c_str());
-        return false;
-      }
-    }
-    else
-    {
-      ROS_ERROR("unable to connect to model spawner");
-      return false;
-    }
-  }
-  return true;
-}
-#endif
