@@ -1,3 +1,4 @@
+<!-- used to run gazebo for testing -->
 <launch>
   <!-- uses empty world logic but changes name -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -5,5 +6,6 @@
     <arg name="gui" value="false"/>
     <!-- more parameters would go here -->
   </include>
+  <node name="spawn_rover" pkg="gazebo_ros" type="spawn_model" args="-file $(find lk_rover)/urdf/rover.urdf -urdf -z 1 -model sirdigsalot" />
 </launch>
 
