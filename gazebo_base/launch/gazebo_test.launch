@@ -1,9 +1,0 @@
-<launch>
-  <include file="$(find tesbot_gazebo)/launch/tesbot.launch">
-    <param name="gui" value="false" />
-  </include>
-  <node pkg="gazebo_base" type="gazebo_base" name="gazebo_base" output="screen">
-    <param name="model_path" type="str" value="$(find tesbot_description)/urdf/tesbot.urdf" />
-    <param name="sleep_time" type="int" value="5" />
-  </node>
-</launch>
