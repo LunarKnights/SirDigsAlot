@@ -190,35 +190,6 @@
       <commandTopic>cmd_vel</commandTopic>
       <broadcastTF>false</broadcastTF>
     </plugin>
-    <!--
-    <plugin name="front_differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>${updateRate}</updateRate>
-      <leftJoint>base_to_left_front_wheel</leftJoint>
-      <rightJoint>base_to_right_front_wheel</rightJoint>
-      <wheelSeparation>0.5334</wheelSeparation>
-      <wheelDiameter>0.20232</wheelDiameter>
-      <torque>20</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-    </plugin>
-    <plugin name="back_differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>${updateRate}</updateRate>
-      <leftJoint>base_to_left_back_wheel</leftJoint>
-      <rightJoint>base_to_right_back_wheel</rightJoint>
-      <wheelSeparation>0.5334</wheelSeparation>
-      <wheelDiameter>0.20232</wheelDiameter>
-      <torque>20</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-    </plugin>
-    -->
-
   </gazebo>
 
 </robot>
