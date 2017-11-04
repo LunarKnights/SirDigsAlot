@@ -1,6 +1,6 @@
 <launch>
   <machine name="lkpi" address="lkpi-desktop"/>
-  <rosparam command="load" file="$(find lk_rover)/config/control.yaml" />
+  <rosparam command="load" file="$(find lk_rover)/params/control.yaml" />
   <param name="robot_description" textfile="$(find lk_rover)/urdf/rover.urdf" />
   <node name="lk_rover_node" pkg="lk_rover" type="lk_rover_node" output="screen"/>
   <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/serial0"/>
