@@ -2,10 +2,10 @@
   <include file="$(find tesbot_gazebo)/launch/tesbot.launch">
     <param name="gui" value="false" />
   </include>
-  <param name="robot_description" textfile="$(find tesbot_description)/urdf/tesbot.urdf" />
+  <param name="robot_description" textfile="$(find lk_rover)/urdf/rover.urdf" />
   <rosparam command="load" file="$(find lk_rover)/config/control.yaml" />
   <node pkg="lk_rover" type="lk_rover_node" name="lk_rover_control" output="screen">
-    <param name="model_path" type="str" value="$(find tesbot_description)/urdf/tesbot.urdf" />
+    <param name="model_path" type="str" value="$(find lk_rover)/urdf/rover.urdf" />
     <param name="use_gazebo" type="bool" value="true" />
   </node>
 </launch>
