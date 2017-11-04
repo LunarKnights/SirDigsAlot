@@ -1,5 +1,5 @@
 <launch>
-  <include file="$(find tesbot_gazebo)/launch/tesbot.launch">
+  <include file="$(find lk_rover)/launch/gazebo.launch">
     <param name="gui" value="false" />
   </include>
   <param name="robot_description" textfile="$(find lk_rover)/urdf/rover.urdf" />

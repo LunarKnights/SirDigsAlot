@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="tesbot">
+<robot name="sirdigsalot">
   <link name="base_link">
     <visual>
       <geometry>

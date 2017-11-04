@@ -1,7 +1,7 @@
 <launch>
   <!-- uses empty world logic but changes name -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find tesbot_gazebo)/worlds/tesbot.world"/>
+    <arg name="world_name" value="$(find lk_rover)/worlds/empty.world"/>
     <arg name="gui" value="false"/>
     <!-- more parameters would go here -->
   </include>
