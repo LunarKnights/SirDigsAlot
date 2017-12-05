@@ -164,12 +164,14 @@
   <!-- http://gazebosim.org/tutorials?tut=ros_gzplugins -->
   <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <robotNamespace>/sirdigsalot</robotNamespace>
       <alwaysOn>true</alwaysOn>
       <bodyName>base_link</bodyName>
       <topicName>imu</topicName>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
       <updateRate>20.0</updateRate>
+      <frameName>base_link</frameName>
     </plugin>
     <!--
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -187,6 +189,8 @@
       <wheelDiameter>0.20232</wheelDiameter>
       <robotBaseFrame>base_link</robotBaseFrame>
       <torque>20</torque>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
       <commandTopic>cmd_vel</commandTopic>
       <broadcastTF>false</broadcastTF>
     </plugin>
