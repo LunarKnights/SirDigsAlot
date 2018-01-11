@@ -3,7 +3,14 @@ The codebase for the Lunar Knights Mars Mining Robot.
 
 This contains the code for autonomy for the robot, remote teleoperation, and some facilities for testing.
 
-//Needs Update
+Currently the code is being divided into smaller packages to match practices in other ROS robots.
+lk\_base: Interface to real hardware
+lk\_control: ROS controller stuff
+lk\_description: URDF description of the robot
+lk\_gazebo: Gazebo-related stuff; worlds and launch files to setup stuff
+lk\_navigation: Configuration for navigation stuff; exploration, SLAM, Kalman filters, etc
+lk\_rover: High level automated control of the robot; this is where the logic should go. Also where the root launch files should go
+lk\_teleop: Code to override the automated control and allow teleoperation
   
 # Install dependencies
 ```
