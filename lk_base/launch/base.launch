@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="simulation" default="$(optenv USE_GAZEBO false)"/>
+
+  <node unless="$(arg simulation)" name="lk_base" pkg="lk_base" type="lk_base">
+  </node>
+  <include if="$(arg simulation)" file="$(find lk_gazebo)/launch/simulation.launch">
+  </include>
+
+  <include file="$(find lk_control)/launch/control.launch">
+  </include>
+</launch>
