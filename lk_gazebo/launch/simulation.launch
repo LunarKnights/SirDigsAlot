@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- uses empty world logic but changes name -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find lk_gazebo)/worlds/empty.world"/>
+    <arg name="gui" value="false"/>
+    <!-- more parameters would go here -->
+  </include>
+  <node name="spawn_rover" pkg="gazebo_ros" type="spawn_model" args="-file $(find lk_description)/urdf/rover.urdf -urdf -z 1 -model sirdigsalot" />
+</launch>
