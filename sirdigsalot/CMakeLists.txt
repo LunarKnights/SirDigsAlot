@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(lk_rover)
+project(sirdigsalot)
 
 add_definitions(-std=c++11)
 
@@ -120,7 +120,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES lk_rover
+#  LIBRARIES sirdigsalot
  CATKIN_DEPENDS roscpp rospy std_msgs diff_drive_controller hardware_interface controller_manager controller_manager_msgs message_runtime velocity_controllers
 #  DEPENDS system_lib
 )
@@ -139,29 +139,25 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(lk_rover
-#   src/${PROJECT_NAME}/lk_rover.cpp
+# add_library(sirdigsalot
+#   src/${PROJECT_NAME}/sirdigsalot.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(lk_rover ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(sirdigsalot ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # Declare a C++ executable
-add_executable(lk_rover_node 
-  src/lk_controller.cpp
-  src/lk_rover_node.cpp
-  src/lk_rover.cpp
-  src/lk_rover_hw.cpp
-  src/sir_digsalot.cpp)
+add_executable(sirdigsalot
+  src/sirdigsalot.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(lk_rover_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(sirdigsalot ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(lk_rover_node
+target_link_libraries(sirdigsalot
   ${catkin_LIBRARIES}
 )
 
@@ -180,7 +176,7 @@ target_link_libraries(lk_rover_node
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS lk_rover lk_rover_node
+# install(TARGETS sirdigsalot sirdigsalot_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -205,7 +201,7 @@ target_link_libraries(lk_rover_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_lk_rover.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_sirdigsalot.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
