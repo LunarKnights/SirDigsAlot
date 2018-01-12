@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <include file="$(find lk_description)/launch/description.launch">
-  </include>
-
   <rosparam command="load" file="$(find lk_control)/config/control.yaml"/>
-
   <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
     args="lk_joint_publisher lk_velocity_controller --shutdown-timeout 3"/>
 

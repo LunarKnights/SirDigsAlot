@@ -219,7 +219,7 @@
     -->
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <controlPeriod>0.02</controlPeriod>
-      <robotNamespace>/sirdigsalot</robotNamespace>
+      <robotNamespace>/</robotNamespace>
     </plugin>
   </gazebo>
 

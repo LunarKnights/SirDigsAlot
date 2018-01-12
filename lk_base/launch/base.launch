@@ -3,6 +3,9 @@
   <arg name="simulation" default="$(optenv USE_GAZEBO false)"/>
   <arg name="robot_namespace" default="$(optenv ROBOT_NAMESPACE sirdigsalot)"/>
 
+  <include file="$(find lk_description)/launch/description.launch">
+  </include>
+
   <node unless="$(arg simulation)" name="lk_base" pkg="lk_base" type="lk_base" output="screen">
   </node>
   <include if="$(arg simulation)" file="$(find lk_gazebo)/launch/simulation.launch">
