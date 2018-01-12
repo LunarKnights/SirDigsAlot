@@ -117,7 +117,7 @@
     <child link="right_front_wheel"/>
     <axis xyz="1 0 0"/>
     <origin xyz=".2667 .365125 0"/>
-    <dynamics damping="0.7"/>
+    <dynamics damping="0.2" friction="0.0"/>
   </joint>
 
   <joint name="lf_wheel_joint" type="continuous">
@@ -125,7 +125,7 @@
     <child link="left_front_wheel"/>
     <axis xyz="1 0 0"/>
     <origin xyz="-.2667 .365125 0"/>
-    <dynamics damping="0.7"/>
+    <dynamics damping="0.2" friction="0.0"/>
   </joint>
 
   <joint name="rb_wheel_joint" type="continuous">
@@ -133,7 +133,7 @@
     <child link="right_back_wheel"/>
     <axis xyz="1 0 0"/>
     <origin xyz=".2667 -.365125 0"/>
-    <dynamics damping="0.7"/>
+    <dynamics damping="0.2" friction="0.0"/>
   </joint>
 
   <joint name="lb_wheel_joint" type="continuous">
@@ -141,48 +141,48 @@
     <child link="left_back_wheel"/>
     <axis xyz="1 0 0"/>
     <origin xyz="-.2667 -.365125 0"/>
-    <dynamics damping="0.7"/>
+    <dynamics damping="0.2" friction="0.0"/>
   </joint>
 
   <!-- gazebosim.org/tutorials?tut=ros_control&cat=control_ros -->
   <transmission name="rf_transmission">
     <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rf_wheel_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
     <joint name="rf_wheel_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="rf_wheel_joint">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
   </transmission>
 
   <transmission name="lf_transmission">
     <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="lf_wheel_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
     <joint name="lf_wheel_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="lf_wheel_joint">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
   </transmission>
 
   <transmission name="rb_transmission">
     <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rb_wheel_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
     <joint name="rb_wheel_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="rb_wheel_joint">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
   </transmission>
 
   <transmission name="lb_transmission">
     <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="lb_wheel_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
     <joint name="lb_wheel_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="lb_wheel_joint">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
   </transmission>
 
 
