@@ -9,8 +9,11 @@ lk\_control: ROS controller stuff
 lk\_description: URDF description of the robot
 lk\_gazebo: Gazebo-related stuff; worlds and launch files to setup stuff
 lk\_navigation: Configuration for navigation stuff; exploration, SLAM, Kalman filters, etc
-lk\_rover: High level automated control of the robot; this is where the logic should go. Also where the root launch files should go
+sirdigsalot: High level automated control of the robot; this is where the logic should go. Also where the root launch files should go
 lk\_teleop: Code to override the automated control and allow teleoperation
+
+To run in gazebo:
+USE\_GAZEBO=true roslaunch sirdigsalot bringup.launch
   
 # Install dependencies
 ```
