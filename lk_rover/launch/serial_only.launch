@@ -1,4 +1,0 @@
-<launch>
-  <machine name="lkpi" address="lkpi-desktop"/>
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/serial0" output="screen"/>
-</launch>
