@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh, nhPriv("~");
 
   lk_base::LKHardware lk_hw(nh, nhPriv);
-  controller_manger::ControllerManager cm(&lk_hw, nh);
+  controller_manager::ControllerManager cm(&lk_hw, nh);
   std::atomic<bool> running(true);
 
   std::thread controlThread([&]() {

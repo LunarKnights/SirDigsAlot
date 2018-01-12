@@ -52,11 +52,11 @@
 
   <build_depend>roscpp</build_depend>
   <build_depend>controller_manager</build_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>controller_manager</run_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
 
-  <run_depend>lk_control</run_depend>
-  <run_depend>lk_gazebo</run_depend>
+  <exec_depend>lk_control</exec_depend>
+  <exec_depend>lk_gazebo</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

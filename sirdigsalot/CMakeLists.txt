@@ -10,24 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  diff_drive_controller
-  velocity_controllers
-  hardware_interface
-  controller_manager
-  controller_manager_msgs
-  message_generation
 )
-
-find_package(gazebo)
-
-if(gazebo_FOUND)
-    list(APPEND MY_SRCS src/gazebo_hw.cpp)
-    list(APPEND MY_LINK_INCLUDE_DIRS ${gazebo_INCLUDE_DIRS})
-    list(APPEND MY_LINK_LIBRARIES ${gazebo_LIBRARIES})
-    # Anything else you need to do to enable use of the optional dep, like add definitions
-    add_definitions("-DUSE_GAZEBO=1")
-endif()
-
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -121,7 +104,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES sirdigsalot
- CATKIN_DEPENDS roscpp rospy std_msgs diff_drive_controller hardware_interface controller_manager controller_manager_msgs message_runtime velocity_controllers
+ CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 

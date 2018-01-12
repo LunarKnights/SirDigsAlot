@@ -35,7 +35,7 @@ void LKHardware::updateJointsFromHardware(double elapsed)
 }
 
 // Send commands to hardware
-void LKRoverHW::writeCommandsToHardware()
+void LKHardware::writeCommandsToHardware()
 {
   // TODO
 }
