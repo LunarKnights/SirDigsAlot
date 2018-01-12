@@ -17,16 +17,27 @@ USE\_GAZEBO=true roslaunch sirdigsalot bringup.launch
 
 # TODOs
 [ ] Improve robot modelling
+
 [ ] Add in remaining actuators for deposition system/camera system/whatever else
+
 [ ] Implement controller lock node to allow cleaner transition between automated mode and teleop
+
 [ ] Make sure all package dependencies are correct
+
 [ ] Readd e-stops/timeout checkers in various places
+
 [ ] Reimplement teleoperation
+
 [ ] Clean up launch files
+
 [ ] Flesh out high level planning framework
+
 [ ] Add/configure localization nodes
+
 [ ] And/configure move\_base for robot navigation planning
+
 [ ] Improve world simulation
+
 [ ] Add in hardware interfacing (CAN) code
   
 # Install dependencies
