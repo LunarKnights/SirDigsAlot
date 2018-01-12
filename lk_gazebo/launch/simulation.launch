@@ -7,7 +7,5 @@
     <arg name="paused" value="false"/>
     <!-- more parameters would go here -->
   </include>
-  <group ns ="sirdigsalot">
-    <node name="spawn_rover" pkg="gazebo_ros" type="spawn_model" args="-unpause -param robot_description -urdf -z 1 -model sirdigsalot" />
-  </group>
+  <node name="spawn_rover" pkg="gazebo_ros" type="spawn_model" args="-unpause -param robot_description -urdf -z 1 -model sirdigsalot" />
 </launch>
