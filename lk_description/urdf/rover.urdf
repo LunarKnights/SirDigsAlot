@@ -144,6 +144,17 @@
     <dynamics damping="0.7"/>
   </joint>
 
+  <transmission name="rf_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rf_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rf_wheel_joint">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
   <!-- fake joints because the virtual actuator joints need children -->
   <link name="dump_end">
   </link>
@@ -163,6 +174,7 @@
 
   <!-- http://gazebosim.org/tutorials?tut=ros_gzplugins -->
   <gazebo>
+    <!--
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <robotNamespace>/sirdigsalot</robotNamespace>
       <alwaysOn>true</alwaysOn>
@@ -173,11 +185,12 @@
       <updateRate>20.0</updateRate>
       <frameName>base_link</frameName>
     </plugin>
-    <!--
+    -->
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <controlPeriod>0.02</controlPeriod>
       <robotNamespace>/sirdigsalot</robotNamespace>
     </plugin>
-    -->
+    <!--
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>100</updateRate>
       <robotNamespace>/sirdigsalot</robotNamespace>
@@ -194,6 +207,7 @@
       <commandTopic>cmd_vel</commandTopic>
       <broadcastTF>false</broadcastTF>
     </plugin>
+    -->
   </gazebo>
 
 </robot>

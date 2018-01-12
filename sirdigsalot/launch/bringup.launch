@@ -3,6 +3,8 @@
   <group ns="/sirdigsalot">
     <param name="robot_namespace" value="sirdigsalot"/>
     <node name="sirdigsalot" pkg="sirdigsalot" type="sirdigsalot" output="screen"/>
-    <include file="$(find lk_base)/launch/base.launch"/>
   </group>
+  <include file="$(find lk_base)/launch/base.launch">
+    <arg name="robot_namespace" value="sirdigsalot"/>
+  </include>
 </launch>
