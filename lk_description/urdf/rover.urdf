@@ -128,7 +128,7 @@
     <dynamics damping="0.7"/>
   </joint>
 
-  <joint name="br_wheel_joint" type="continuous">
+  <joint name="rb_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="right_back_wheel"/>
     <axis xyz="1 0 0"/>
@@ -136,7 +136,7 @@
     <dynamics damping="0.7"/>
   </joint>
 
-  <joint name="bl_wheel_joint" type="continuous">
+  <joint name="lb_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="left_back_wheel"/>
     <axis xyz="1 0 0"/>
@@ -144,16 +144,47 @@
     <dynamics damping="0.7"/>
   </joint>
 
+  <!-- gazebosim.org/tutorials?tut=ros_control&cat=control_ros -->
   <transmission name="rf_transmission">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="rf_wheel_joint">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="rf_wheel_joint">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+
+  <transmission name="lf_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="lf_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="lf_wheel_joint">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="rb_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rb_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rb_wheel_joint">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="lb_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="lb_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="lb_wheel_joint">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
 
   <!-- fake joints because the virtual actuator joints need children -->
   <link name="dump_end">
@@ -190,24 +221,6 @@
       <controlPeriod>0.02</controlPeriod>
       <robotNamespace>/sirdigsalot</robotNamespace>
     </plugin>
-    <!--
-    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-      <updateRate>100</updateRate>
-      <robotNamespace>/sirdigsalot</robotNamespace>
-      <leftFrontJoint>base_to_left_front_wheel</leftFrontJoint>
-      <rightFrontJoint>base_to_right_front_wheel</rightFrontJoint>
-      <leftRearJoint>base_to_left_back_wheel</leftRearJoint>
-      <rightRearJoint>base_to_right_back_wheel</rightRearJoint>
-      <wheelSeparation>0.5334</wheelSeparation>
-      <wheelDiameter>0.20232</wheelDiameter>
-      <robotBaseFrame>base_link</robotBaseFrame>
-      <torque>20</torque>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <commandTopic>cmd_vel</commandTopic>
-      <broadcastTF>false</broadcastTF>
-    </plugin>
-    -->
   </gazebo>
 
 </robot>
