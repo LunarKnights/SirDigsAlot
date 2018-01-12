@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 
   std::thread controlThread([&]() {
       auto r = ros::Rate(50);
-      auto curTime = ros::Time::now();
       while (running)
       {
+        auto curTime = ros::Time::now();
         r.sleep();
         lk_hw.updateJointsFromHardware(r.cycleTime().toSec());
         cm.update(curTime, r.cycleTime());

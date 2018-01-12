@@ -2,7 +2,7 @@
 <launch>
   <arg name="simulation" default="$(optenv USE_GAZEBO false)"/>
 
-  <node unless="$(arg simulation)" name="lk_base" pkg="lk_base" type="lk_base">
+  <node unless="$(arg simulation)" name="lk_base" pkg="lk_base" type="lk_base" output="screen">
   </node>
   <include if="$(arg simulation)" file="$(find lk_gazebo)/launch/simulation.launch">
   </include>

@@ -1,7 +1,7 @@
 lk_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
-  left_wheel: ['base_to_left_front_wheel', 'base_to_left_back_wheel']
-  right_wheel: ['base_to_right_front_wheel', 'base_to_right_back_wheel']
+  left_wheel: ['lf_wheel_joint', 'lb_wheel_joint']
+  right_wheel: ['rf_wheel_joint', 'rb_wheel_joint']
   publish_rate: 50
   pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 0.03]
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 1000000.0, 1000000.0, 0.03]

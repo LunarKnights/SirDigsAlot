@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "lk_base/lk_hardware.h"
 
 // TODO: make sure this matches the names in lk_description
@@ -22,9 +20,18 @@ void LKHardware::registerInterfaces()
 {
   for (int i = 0; i < kNumWheels; ++i)
   {
-    // TODO
+    hardware_interface::JointStateHandle jsh(kWheelNames[i],
+        &wheels[i].pos, &wheels[i].vel, &wheels[i].accel);
+    jsi.registerHandle(jsh);
+
+    hardware_interface::JointHandle jh(jsh, &wheels[i].cmd);
+    vji.registerHandle(jh);
   }
-  // TODO
+  // TODO: add joints for bucket and deposition system and whatever
+  registerInterface(&vji);
+  registerInterface(&pji);
+  registerInterface(&jsi);
+  registerInterface(&eji);
 }
 
 // Gets values from hardware and stores them in the Joint structs, so that
