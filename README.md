@@ -27,7 +27,7 @@ These will be discussed in more detail in the READMEs in each package
 - [ ] Make a nice graph of package dependencies (100 points)
 - [ ] Improve robot modelling (lk\_gazebo, lk\_description)
 - [ ] Add in remaining actuators for deposition system/camera system/whatever else (lk\_description)
-- [ ] Implement controller lock node to allow cleaner transition between automated mode and teleop (new node)
+- [ ] Implement controller lock node to allow cleaner transition between automated mode and teleop (lk\_control, new node)
 - [ ] Make sure all package dependencies are correct (all packages)
 - [ ] Readd e-stops/timeout checkers in various places (lk\_base, lk\_control)
 - [ ] Reimplement teleoperation (lk\_teleop)
@@ -64,13 +64,10 @@ These should probably get you a working copy of Sirdigsalot on your computer
 
 ## Install dependencies
 ```
-
-sudo apt-get install ros-kinetic-diff_drive_controller
-
-sudo apt-get install ros-kinetic-controller_manager
-//Needs update
+// TODO: update
+sudo apt-get install ros-kinetic-diff_drive_controller ros-kinetic-controller-manager
 ```
-## How to install
+## Install into catkin\_ws/
 
 ```
 # create a folder to put the code in
@@ -83,13 +80,16 @@ git clone https://github.com/LunarKnights/SirDigsAlot src/
 cd ~/catkin_ws/src
 catkin_init_workspace
 
+# sync any Git submodules in the project
+git submodule update --init --recursive
+
 # build the project
 source ~/catkin_ws/devel/setup.bash
 cd ~/catkin_ws
 catkin_make
 ```
 
-## Useful references
+# Useful references
 http://wiki.ros.org/roscpp/Overview/Services
 http://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers
 http://wiki.ros.org/roscpp/Overview/Messages

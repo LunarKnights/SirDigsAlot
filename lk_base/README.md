@@ -8,6 +8,7 @@ Also, joint and actuator will be used interchangeably through the rest of this R
 
 - [ ] Add all the actuators used on the robot (Feb + 1 week)
   - [ ] Connect the actuators to the actual hardware (March + 0 weeks)
+    - [ ] Add timeouts/estop features (March + 3 weeks)
 - [ ] Make sure ROS dependencies are correct (Feb + 1 week)
 
 ### Add all the actuators
@@ -27,10 +28,25 @@ Technically, it's a little more complicated than that, but this is a good enough
 So, after the previous step is done, the controllers will be periodically writing data to some floating-point values in `LKHardware`, and then reading some values from other floating-point numbers in `LKHardware`.
 Now we need to make sure those numbers are meaningful values captured from the real world.
 
-- [ ] Finish `can_talon_srx` work (50 points)
+- [ ] Finish `can_talon_srx` work (- points)
 - [ ] Set up similar interface for stepper motors (100 points)
 - [ ] Work out testing protocol (50 points)
 - [ ] Connect and test them all here (25 points)
+
+### Add timeouts/emergency stops
+For added safety, we need to add some code to automatically disable all the motors whenever something that's potentially bad happens.
+This should include:
+
+- loss of connection during teleoperation
+- no messages from the navigation node (maybe it died or something?)
+- command from a ROS topic that acts as a software emergency stop (and also don't forget to connect that to something in teleoperation mode)
+
+So we need to figure out exactly what kinds of safety measures should be done, and then actually do that, and then write some integration tests to make sure it actually works.
+
+
+- [ ] Figure out high level design (25 points)
+- [ ] Implement design (50 points)
+- [ ] Test and debug design (100 points)
 
 ### Check dependencies
 In `package.xml`, there is a list of dependencies, which may or may not reflect what this package actually needs.
