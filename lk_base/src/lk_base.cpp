@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "husky_base");
+  ros::init(argc, argv, "lk_base");
   ros::NodeHandle nh, nhPriv("~");
 
   lk_base::LKHardware lk_hw(nh, nhPriv);
