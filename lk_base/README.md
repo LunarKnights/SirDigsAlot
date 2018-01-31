@@ -4,11 +4,16 @@ The lk\_control will connect to the `ControllerManager` created in this package,
 The corresponding ROS documentation is [here](http://wiki.ros.org/ros_control).
 Also, joint and actuator will be used interchangeably through the rest of this README; both basically refer to a thing on the robot that moves and that we have some control over.
 
+## Things already implemented
+
+- Base framework so that stuff can be added more easily
+
 ## TODOs
 
 - [ ] Add all the actuators used on the robot (Feb + 1 week)
   - [ ] Connect the actuators to the actual hardware (March + 0 weeks)
     - [ ] Add timeouts/estop features (March + 3 weeks)
+- [ ] Add all sensors (Feb + 2 weeks)
 - [ ] Make sure ROS dependencies are correct (Feb + 1 week)
 
 ### Add all the actuators
@@ -47,6 +52,18 @@ So we need to figure out exactly what kinds of safety measures should be done, a
 - [ ] Figure out high level design (25 points)
 - [ ] Implement design (50 points)
 - [ ] Test and debug design (100 points)
+
+### Add all sensors
+We need to compile a list of all the sensors on the robot and their positions on it too.
+Each sensor will probably have a ROS node that will communicate with it and publish their data for the sensor fusion stuff to use.
+
+```
+Sensor list here
+```
+
+- [ ] List out all the sensors and post the list here (10 points)
+  - [ ] Research ROS nodes (10 points/sensor)
+  - [ ] Add stuff to launch files to set up sensors correctly (25 points/sensor)
 
 ### Check dependencies
 In `package.xml`, there is a list of dependencies, which may or may not reflect what this package actually needs.

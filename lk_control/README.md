@@ -5,12 +5,12 @@ This math can be a PID controller, or just directly copying the value into the h
 The corresponding ROS documentation is [here](http://wiki.ros.org/ros_control).
 
 ## TODOs
-- [ ] Write \\cmd\_vel multiplexer (Feb + 2 weeks)
+- [ ] Write command multiplexer (Feb + 2 weeks)
 - [ ] Add controllers for all the joints in the robot (Feb + 2 weeks)
-- [ ] Tweak controllers for all the joints in the robot (March + 2 weeks)
+  - [ ] Tweak controllers for all the joints in the robot (March + 2 weeks)
 - [ ] Make sure package dependencies are correct (Feb + 1 week)
 
-### Write \\cmd\_vel multiplexer
+### Write command multiplexer
 So `\cmd_vel` is a standardish ROS topic used for communicating the direction the robot should head in.
 The navigation node, or the user in teleoperation mode, will send commands to `\cmd_vel`, and the controllers set up here will figure out the appropriate commands to send to the wheel actuators to get the robot moving in that direction.
 
@@ -29,3 +29,25 @@ There are a lot of command messages that will be used, for every single actuator
 - [ ] Write tests for multiplexer (100 points)
 
 ### Add controllers for all the joints in the robot
+So yeah, each robot joint needs a controller so we have something that translates a ROS topic command to something that happens in hardware.
+A list of controllers we can is available [here](http://wiki.ros.org/ros_control#Controllers).
+We could write our own controllers, but I don't think any of the necessary motions are complicated enough to warrant that.
+They're not very well documented, but I'm guessing for most of the joints we'll want to use a `JointPositionController`, since most of the time what matters is the joint position, instead of effort (force) or velocity.
+
+The best workflow is to probably wait until the simulation's set up correctly, and then add a controller, and then run the simulation to see if it works.
+
+- [ ] Add controller for a joint (25 points/joint)
+  - [ ] Compile a list of all joints and add it here (10 points)
+
+### Tweak controllers
+Some of the controllers will need some configuration to work better.
+PID controllers will work a little better if the PID values are tuned.
+If the simulation model's built well enough, it should be possible to do some tuning within the simulation.
+
+- [ ] Tune controller for a joint (10 points/joint)
+
+### Check dependencies
+In `package.xml`, there is a list of dependencies, which may or may not reflect what this package actually needs.
+Try to figure out if that list is correct or not.
+
+- [ ] Make sure dependencies for `lk_control` are correct (25 points)
