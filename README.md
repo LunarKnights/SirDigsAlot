@@ -41,9 +41,9 @@ These will be discussed in more detail in the READMEs in each package
 
 # Developer notes
 ~~The code should be formatted against the ROS standard so that's everything's nice and uniform.
-The easiest way to do this is using `clang-tidy` with this guy's [formatting rules](https://github.com/davetcoleman/roscpp_code_format)
+The easiest way to do this is using `clang-tidy` with this guy's [formatting rules](https://github.com/davetcoleman/roscpp_code_format)~~
 
-This is how to install `clang-tidy` and that guy's rules:
+~~This is how to install `clang-tidy` and that guy's rules:~~
 ```
 sudo apt-get install -y clang-format-3.8
 cd ~
@@ -51,11 +51,10 @@ git clone https://github.com/davetcoleman/roscpp_code_format
 ln -s ~/roscpp_code_format/.clang-format ~/catkin_ws/.clang-format
 ```
 
-and then run this from the `src/` directory to restyle any files you've changed:
+~~and then run this from the `src/` directory to restyle any files you've changed:~~
 ```
 find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs clang-format-3.8 -i -style=file $1
 ```
-~~
 
 Fuck that, just submit whatever and I'll fix it up.
 
