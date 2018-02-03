@@ -20,6 +20,7 @@ USE\_GAZEBO=true roslaunch sirdigsalot bringup.launch
 # How to contribute
 Preliminary information on Git is available [here](https://help.github.com/articles/about-pull-requests/) and [here](https://git-scm.com/book/en/v1/Git-Branching-What-a-Branch-Is).
 Ideally, you should fork this project, make an issue indicating that you're working on something, and then when you finish your task, open a pull request to merge your changes into the main codebase.
+Also add yourself to the maintainers list in the `package.xml` file for that package, so that people working on that project down the line can bother you in the future.
 If that seems too complicated, just email me a zipfile or tarball of the repository with the changes and I'll do the bookkeeping needed to make sure you get points.
 
 # TODOs
