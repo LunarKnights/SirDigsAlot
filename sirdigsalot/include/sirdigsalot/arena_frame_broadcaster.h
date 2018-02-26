@@ -1,14 +1,13 @@
 #ifndef SIRDIGSALOT_ARENA_FRAME_BROADCASTER_H_
 #define SIRDIGSALOT_ARENA_FRAME_BROADCASTER_H_
 
-#include <future>
 #include <memory>
-#include <vector>
+#include <mutex>
+#include <thread>
 
-#include <actionlib/client/simple_action_client.h>
-#include <move_base_msgs/MoveBaseAction.h>
-
-#include <sirdigsalot/ticker.h>
+#include <tf/tf.h>
+#include <tf/transform_datatypes.h>
+#include <tf/LinearMath/Transform.h>
 
 namespace sirdigsalot {
 
@@ -19,12 +18,13 @@ namespace sirdigsalot {
 class ArenaFrameBroadcaster
 {
 public:
+  ArenaFrameBroadcaster();
+  ~ArenaFrameBroadcaster();
   // used to set the arena frame using the known locations of a single point
   // in both spaces
-  ArenaFrameBroadcaster(); // TODO
-  ~ArenaFrameBroadcaster(); // TODO
-  void SetArenaFrame(tf::Point mapPoint, tf::Point arenaPoint); // TODO
+  void SetArenaFrame(tf::Point mapPoint, tf::Point arenaPoint);
 protected:
+  static void ThreadLoop(ArenaFrameBroadcaster* me);
   std::thread frameRunner;
   std::mutex frameLock;
   std::shared_ptr<tf::Transform> frame;
