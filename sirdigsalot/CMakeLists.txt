@@ -9,7 +9,8 @@ add_definitions(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  tf
+  tf2
+  tf2_eigen
   geometry_msgs
   std_msgs
   move_base_msgs
@@ -109,7 +110,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES sirdigsalot
  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+ DEPENDS Eigen
 )
 
 
@@ -122,6 +123,7 @@ catkin_package(
 # include_directories(include)
 include_directories(
   include
+  ${Eigen_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 

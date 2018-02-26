@@ -36,12 +36,25 @@ void MoveBase::Tick()
   // NOTE: maybe later this will need to do something
 }
 
-MoveResult MoveBase::MoveTo(tf::Pose pose, ros::Duration timeout)
+MoveResult MoveBase::MoveTo(Eigen::Affine3d pose, ros::Duration timeout)
 {
-  // TODO
+  // TODO: look up arena frame to map frame transform; fail quickly if not found
+  // tf2::Transform fromArenaToMap = {0};
+
+  // TODO: transform pose into the map frame
+
+  // TODO: fill in a goal for move_base and send it out
+  move_base_msgs::MoveBaseGoal goal;
+  /*
+  goal.target_pose.header = {0}; // TODO
+  goal.target_pose.pose = transformedPose;
+  */
+
+  auto ret = client->sendGoalAndWait(goal, timeout);
+  // TODO: process the returned output
 }
 
-MoveResult MoveBase::MoveDelta(tf::Point point, ros::Duration timeout)
+MoveResult MoveBase::MoveDelta(Eigen::Vector2d point, ros::Duration timeout)
 {
   // TODO
 }

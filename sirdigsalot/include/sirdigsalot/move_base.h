@@ -5,10 +5,12 @@
 #include <memory>
 #include <vector>
 
+#include <Eigen/Dense>
+
 #include <actionlib/client/simple_action_client.h>
 #include <move_base_msgs/MoveBaseAction.h>
 
-#include <tf/tf.h>
+#include <tf2_ros/transform_listener.h>
 
 #include <sirdigsalot/ticker.h>
 #include <sirdigsalot/ticker_manager.h>
@@ -41,11 +43,11 @@ public:
 
   /// Moves the robot into a new pose within the timeout period
   /// Set the timeout to zero to just wait into the target pose is reached
-  MoveResult MoveTo(tf::Pose pose, ros::Duration timeout);
+  MoveResult MoveTo(Eigen::Affine3d pose, ros::Duration timeout);
 
   /// Moves the robot in the direction of the point
   /// Set the timeout to zero to wait until the target position is reached
-  MoveResult MoveDelta(tf::Point point, ros::Duration timeout);
+  MoveResult MoveDelta(Eigen::Vector2d point, ros::Duration timeout);
 
   /// Creates an instance of MoveBase and registers it to the TickerManager
   static std::shared_ptr<MoveBase> CreateInstance(TickerManager& manager);

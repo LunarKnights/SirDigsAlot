@@ -12,7 +12,7 @@ ArenaFrameBroadcaster::~ArenaFrameBroadcaster()
   // TODO
 }
 
-void ArenaFrameBroadcaster::SetArenaFrame(tf::Point mapPoint, tf::Point arenaPoint)
+void ArenaFrameBroadcaster::SetArenaFrame(Eigen::Vector3d mapPoint, Eigen::Vector3d arenaPoint)
 {
   // TODO
 }

@@ -5,9 +5,11 @@
 #include <mutex>
 #include <thread>
 
-#include <tf/tf.h>
-#include <tf/transform_datatypes.h>
-#include <tf/LinearMath/Transform.h>
+#include <Eigen/Dense>
+
+#include <geometry_msgs/Transform.h>
+
+#include <tf2/transform_datatypes.h>
 
 namespace sirdigsalot {
 
@@ -22,12 +24,12 @@ public:
   ~ArenaFrameBroadcaster();
   // used to set the arena frame using the known locations of a single point
   // in both spaces
-  void SetArenaFrame(tf::Point mapPoint, tf::Point arenaPoint);
+  void SetArenaFrame(Eigen::Vector3d mapPoint, Eigen::Vector3d arenaPoint);
 protected:
   static void ThreadLoop(ArenaFrameBroadcaster* me);
   std::thread frameRunner;
   std::mutex frameLock;
-  std::shared_ptr<tf::Transform> frame;
+  std::shared_ptr<geometry_msgs::Transform> frame;
 };
 
 }
