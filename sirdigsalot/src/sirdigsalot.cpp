@@ -7,7 +7,7 @@
 #include "ros/ros.h"
 #include "ros/console.h"
 
-#include <sirdigsalot/movement_manager.h>
+#include <sirdigsalot/move_base.h>
 #include <sirdigsalot/ticker_manager.h>
 
 using namespace sirdigsalot;
@@ -24,9 +24,10 @@ int main(int argc, char** argv)
   auto r = ros::Rate(100);
 
   TickerManager tickerManager;
-  auto movementManager = MovementManager::CreateInstance(tickerManager);
+  auto moveBase = MoveBase::CreateInstance(tickerManager);
 
   std::thread([=]() {
+      moveBase->Init();
     // TODO: high level logic here
   });
 

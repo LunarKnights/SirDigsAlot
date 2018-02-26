@@ -140,7 +140,7 @@ add_executable(sirdigsalot
   src/arena_frame_broadcaster.cpp
   src/sirdigsalot.cpp
   src/ticker_manager.cpp
-  src/movement_manager.cpp
+  src/move_base.cpp
   )
 
 ## Add cmake target dependencies of the executable
