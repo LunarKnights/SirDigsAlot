@@ -9,6 +9,8 @@ add_definitions(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf
+  geometry_msgs
   std_msgs
   move_base_msgs
   actionlib
@@ -135,9 +137,10 @@ include_directories(
 
 # Declare a C++ executable
 add_executable(sirdigsalot
+  src/arena_frame_broadcaster.cpp
   src/sirdigsalot.cpp
-  src/movement_manager.cpp
   src/ticker_manager.cpp
+  src/movement_manager.cpp
   )
 
 ## Add cmake target dependencies of the executable
