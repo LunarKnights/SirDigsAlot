@@ -52,7 +52,7 @@ There seems to be two major kinds of fiducials (although there are probably more
 - (Fast) PiTag, which uses a set of circles
 
 We need to figure out which one is better for our robot.
-Both of these seem to be easyish to implement in ROS, ArUco is supported via the (aruco_detect)[http://wiki.ros.org/aruco_detect] package, and PiTag is supported through (cob_fiducials)[http://wiki.ros.org/cob_fiducials] (but the dependencies are an absolute mess so it might make sense to repackage this (un-ROSified version)[https://github.com/mpetroff/pi-tag-detector] of it to avoid the dependency problems.
+Both of these seem to be easyish to implement in ROS, ArUco is supported via the [aruco_detect](http://wiki.ros.org/aruco_detect) package, and PiTag is supported through [cob_fiducials](http://wiki.ros.org/cob_fiducials) (but the dependencies are an absolute mess so it might make sense to repackage this [un-ROSified version](https://github.com/mpetroff/pi-tag-detector) of it to avoid the dependency problems.
 
 Here's some relevant documents:
 - http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.721.540&rep=rep1&type=pdf
