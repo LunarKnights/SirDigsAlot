@@ -7,10 +7,12 @@
 #include <mutex>
 #include <thread>
 
+#include <ros/ros.h>
+
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Transform.h>
 
-#include <tf2/transform_datatypes.h>
+#include <tf2_ros/transform_broadcaster.h>
 
 namespace sirdigsalot {
 
@@ -21,13 +23,20 @@ namespace sirdigsalot {
 class ArenaFrameBroadcaster
 {
 public:
-  ArenaFrameBroadcaster();
+  ArenaFrameBroadcaster(ros::NodeHandle &nh, ros::NodeHandle &nhPrivate);
   ~ArenaFrameBroadcaster();
   // used to set the arena frame using the known locations of a single point
   // in both spaces
   void SetArenaFrame(const geometry_msgs::Pose &mapPoint, const geometry_msgs::Pose &arenaPoint);
 protected:
   static void ThreadLoop(ArenaFrameBroadcaster* me);
+
+  // TODO: use a ROS parameter instead
+  double broadcastRate = 10.0;
+  std::string mapFrame;
+  std::string arenaFrame;
+
+  tf2_ros::TransformBroadcaster broadcaster;
 
   std::atomic<bool> isRunning;
   std::condition_variable inited;

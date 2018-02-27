@@ -1,4 +1,6 @@
-#include <lock_guard>
+#include <mutex>
+
+#include <geometry_msgs/TransformStamped.h>
 
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
@@ -6,9 +8,11 @@
 
 namespace sirdigsalot {
 
-ArenaFrameBroadcaster::ArenaFrameBroadcaster()
+ArenaFrameBroadcaster::ArenaFrameBroadcaster(ros::NodeHandle &nh, ros::NodeHandle &nhPrivate): isRunning(true)
 {
-  isRunning = true;
+  nh.param<std::string>("map_frame_id", mapFrame, "map");
+  nh.param<std::string>("arena_frame_id", arenaFrame, "arena");
+
   frameRunner = std::thread(ArenaFrameBroadcaster::ThreadLoop, this);
 }
 
@@ -24,7 +28,7 @@ ArenaFrameBroadcaster::~ArenaFrameBroadcaster()
 void ArenaFrameBroadcaster::SetArenaFrame(const geometry_msgs::Pose &mapPoint, const geometry_msgs::Pose &arenaPoint)
 {
   std::lock_guard<std::mutex> guard(frameLock);
-  bool hadFrame = frame;
+  const bool hadFrame = static_cast<bool>(frame);
   if (!hadFrame)
   {
     frame = std::make_shared<geometry_msgs::Transform>();
@@ -37,8 +41,11 @@ void ArenaFrameBroadcaster::SetArenaFrame(const geometry_msgs::Pose &mapPoint, c
   const auto mapPose = mapPose_, arenaPose = arenaPose_;
 
   // http://wiki.ros.org/tf/Overview/Transformations
-  *frame
-  // TODO: find the transform between the poses
+  // find the transform between the poses
+  // TODO: make sure this is correct
+  const auto transform = mapPose * arenaPose.inverse();
+  *frame = tf2::toMsg(transform);
+  // notify the thread loop if this is the first frame
   if (!hadFrame)
   {
     inited.notify_one();
@@ -58,14 +65,23 @@ void ArenaFrameBroadcaster::ThreadLoop(ArenaFrameBroadcaster* me)
       }
     }
   }
+  ROS_INFO("first frame detected, broadcasting transform...");
+  auto r = ros::Rate(me->broadcastRate);
   while (me->isRunning)
   {
     {
       std::lock_guard<std::mutex> guard(me->frameLock);
-      // TODO
+      geometry_msgs::TransformStamped transformStamped;
+      transformStamped.header.stamp = ros::Time::now();
+      transformStamped.header.frame_id = me->mapFrame;
+      transformStamped.child_frame_id = me->arenaFrame;
+      transformStamped.transform = *(me->frame);
+
+      me->broadcaster.sendTransform(transformStamped);
     }
-    // TODO sleep
+    r.sleep();
   }
+  ROS_INFO("arena broadcaster exiting...");
 }
 
 }
