@@ -17,12 +17,12 @@ MoveBase::MoveBase(ros::NodeHandle &nh, ros::NodeHandle &nhPriv):
     tfBuffer(),
     tfListener(tfBuffer)
 {
-  // TODO: use rosparams to parameterize move_base topic
-  client = std::shared_ptr<Client>(new Client("move_base", true));
-  // TODO: use rosparams to get map frame
-  mapFrame = "map";
-  // TODO: use rosparams to get arena frame
-  arenaFrame = "arena";
+  nh.param<std::string>("move_base_topic", moveBaseTopic, "move_base");
+  nh.param<std::string>("map_frame_id", mapFrame, "map");
+  nh.param<std::string>("arena_frame_id", arenaFrame, "arena");
+  nh.param<std::string>("base_frame_id", baseFrame, "base_link");
+
+  client = std::shared_ptr<Client>(new Client(moveBaseTopic, true));
 }
 
 std::shared_ptr<MoveBase> MoveBase::CreateInstance(ros::NodeHandle &nh, ros::NodeHandle &nhPriv, TickerManager& manager)
@@ -48,7 +48,7 @@ void MoveBase::Tick()
   // NOTE: maybe later this will need to do something
 }
 
-WaitResult MoveBase::MoveTo(double x, double y, double angle, ros::Duration timeout)
+WaitResult MoveBase::MoveTo(const double x, const double y, const double angle, const ros::Duration& timeout)
 {
   const auto now = ros::Time::now();
   // look up arena frame to map frame transform; fail quickly if not found
@@ -89,7 +89,7 @@ WaitResult MoveBase::MoveTo(double x, double y, double angle, ros::Duration time
 
   // fill in a goal for move_base and send it out
   move_base_msgs::MoveBaseGoal goal;
-  goal.target_pose.header.frame_id = "base_link";
+  goal.target_pose.header.frame_id = baseFrame;
   goal.target_pose.header.stamp = now;
   goal.target_pose.pose = mapPose;
 
@@ -97,14 +97,14 @@ WaitResult MoveBase::MoveTo(double x, double y, double angle, ros::Duration time
 
   // process the returned value
   switch (ret.state_) {
+    case actionlib::SimpleClientGoalState::SUCCEEDED:
+      return WaitResult(WaitResult::SUCCESS);
     case actionlib::SimpleClientGoalState::REJECTED:
       ROS_WARN("move_base goal rejected!");
       return WaitResult(WaitResult::FAILED);
     case actionlib::SimpleClientGoalState::ABORTED:
       ROS_WARN("move_base goal aborted!");
       return WaitResult(WaitResult::FAILED);
-    case actionlib::SimpleClientGoalState::SUCCEEDED:
-      return WaitResult(WaitResult::SUCCESS);
     case actionlib::SimpleClientGoalState::LOST:
       ROS_WARN("move_base goal lost!");
       return WaitResult(WaitResult::FAILED);
@@ -116,21 +116,90 @@ WaitResult MoveBase::MoveTo(double x, double y, double angle, ros::Duration time
   return WaitResult(WaitResult::FAILED);
 }
 
-WaitResult MoveBase::MoveDelta(double x, double y, ros::Duration timeout)
+WaitResult MoveBase::MoveForward(const double x, const ros::Duration &timeout)
 {
-  // TODO
+  const auto now = ros::Time::now();
+  // look up base frame to map frame transform; fail quickly if not found
+  if (!tfBuffer.canTransform(mapFrame, baseFrame, now))
+  {
+    ROS_ERROR("unable to get base link to map transform!");
+    return WaitResult(WaitResult::FAILED);
+  }
+
+  // actually look up arena frame to map frame transform
+  const auto stampedTransform = tfBuffer.lookupTransform(mapFrame, baseFrame, now);
+  
+  geometry_msgs::Pose arenaPose_;
+
+  // REP 103 recommends having the x axis of the base link frame matching the
+  // longitudinal axis of the robot:
+  // http://www.ros.org/reps/rep-0103.html
+  arenaPose_.position.x = x;
+  arenaPose_.position.y = 0.0;
+  arenaPose_.position.z = 0.0;
+  auto targetAngle = tf2::Quaternion(tf2::Vector3(0.0, 0.0, 1.0), 0.0);
+  arenaPose_.orientation = tf2::toMsg(targetAngle);
+
+  const auto arenaPose = arenaPose_;
+
+  // transform pose into the map frame
+  geometry_msgs::Pose mapPose;
+  // hand copying the code here because this doesn't work for some reason
+  // tf2::doTransform(arenaPose, mapPose, stampedTransform);
+  {
+    tf2::Vector3 v;
+    tf2::fromMsg(arenaPose.position, v);
+    tf2::Quaternion r;
+    tf2::fromMsg(arenaPose.orientation, r);
+
+    tf2::Transform t;
+    tf2::fromMsg(stampedTransform.transform, t);
+    tf2::Transform v_out = t * tf2::Transform(r, v);
+    tf2::toMsg(v_out, mapPose);
+  }
+
+  // fill in a goal for move_base and send it out
+  move_base_msgs::MoveBaseGoal goal;
+  goal.target_pose.header.frame_id = baseFrame;
+  goal.target_pose.header.stamp = now;
+  goal.target_pose.pose = mapPose;
+
+  auto ret = client->sendGoalAndWait(goal, timeout);
+
+
+  // process the returned value
+  switch (ret.state_) {
+    case actionlib::SimpleClientGoalState::SUCCEEDED:
+      return WaitResult(WaitResult::SUCCESS);
+    case actionlib::SimpleClientGoalState::REJECTED:
+      ROS_WARN("move_base goal rejected!");
+      return WaitResult(WaitResult::FAILED);
+    case actionlib::SimpleClientGoalState::ABORTED:
+      ROS_WARN("move_base goal aborted!");
+      return WaitResult(WaitResult::FAILED);
+    case actionlib::SimpleClientGoalState::LOST:
+      ROS_WARN("move_base goal lost!");
+      return WaitResult(WaitResult::FAILED);
+    default:
+      ROS_ERROR("move_base returned unexpected state!");
+      return WaitResult(WaitResult::FAILED);
+  }
+  ROS_ERROR("unreachable code!");
+
   return WaitResult(WaitResult::FAILED);
 }
 
-WaitResult MoveBase::SetMaxVelocity(double vel)
+WaitResult MoveBase::SetMaxVelocity(const double vel)
 {
   // TODO
+  ROS_ERROR("unimplemented!");
   return WaitResult(WaitResult::FAILED);
 }
 
-WaitResult MoveBase::SetMinVelocity(double vel)
+WaitResult MoveBase::SetMinVelocity(const double vel)
 {
   // TODO
+  ROS_ERROR("unimplemented!");
   return WaitResult(WaitResult::FAILED);
 }
 

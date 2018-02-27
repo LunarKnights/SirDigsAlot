@@ -27,8 +27,13 @@ int main(int argc, char** argv)
   auto moveBase = MoveBase::CreateInstance(nh, nhPrivate, tickerManager);
 
   std::thread([=]() {
-      moveBase->Init();
+    moveBase->Init();
     // TODO: high level logic here
+
+    // test code
+    ROS_INFO("moving forward 1 m...");
+    moveBase->MoveForward(1.0f);
+    ROS_INFO("movement finished!");
   });
 
   while (ros::ok())
