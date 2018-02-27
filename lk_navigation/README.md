@@ -7,6 +7,7 @@ The `sirdigsalot` package will talk to the navigation stack located here using t
 - [ ] Research localization packages (Feb + 1 week)
   - [ ] Pick and configure different localization packages (Feb + 3 weeks)
     - [ ] Connect to move\_base node (Mar + 0 weeks)
+        - [ ] Tune navigation stack (Mar + 2 weeks)
 
 ### Research localization packages
 We'll definitely be using a bunch of the different packages available from ROS for localization and mapping.
@@ -23,3 +24,8 @@ So after we have some of the different options researched, and narrowed it down 
 After the localization and mapping stuff's taken care of, we just need to launch a `move_base` node and connect the topics so it'll work
 
 - [ ] Connect a move\_base node (25 points)
+
+### Tune navigation node
+After the move\_base node is correctly integrated into the system, tune it following the guide [here](http://kaiyuzheng.me/documents/navguide.pdf)
+
+- [ ] Tune navigation (25 points)

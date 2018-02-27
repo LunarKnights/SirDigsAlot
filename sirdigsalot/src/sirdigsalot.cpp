@@ -24,7 +24,7 @@ int main(int argc, char** argv)
   auto r = ros::Rate(100);
 
   TickerManager tickerManager;
-  auto moveBase = MoveBase::CreateInstance(tickerManager);
+  auto moveBase = MoveBase::CreateInstance(nh, nhPrivate, tickerManager);
 
   std::thread([=]() {
       moveBase->Init();
