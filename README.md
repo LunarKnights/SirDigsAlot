@@ -66,7 +66,9 @@ These should probably get you a working copy of Sirdigsalot on your computer
 ## Install dependencies
 ```
 // TODO: update
-sudo apt-get install ros-kinetic-diff_drive_controller ros-kinetic-controller-manager libeigen3-dev
+sudo apt-get install ros-kinetic-diff_drive_controller \
+    ros-kinetic-controller-manager \
+    ros-kinetic-fiducials
 ```
 ## Install into catkin\_ws/
 
