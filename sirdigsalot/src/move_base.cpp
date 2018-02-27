@@ -1,5 +1,9 @@
 #include <mutex>
 
+#include <dynamic_reconfigure/DoubleParameter.h>
+#include <dynamic_reconfigure/Reconfigure.h>
+#include <dynamic_reconfigure/Config.h>
+
 #include <geometry_msgs/Pose.h>
 
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
@@ -154,16 +158,52 @@ WaitResult MoveBase::MoveForward(const double x, const ros::Duration &timeout)
 
 WaitResult MoveBase::SetMaxVelocity(const double vel)
 {
-  // TODO
-  ROS_ERROR("unimplemented!");
-  return WaitResult(WaitResult::FAILED);
+  // Copied from https://answers.ros.org/question/12276/is-there-a-c-api-for-a-dynamic-reconfigure-client/
+  dynamic_reconfigure::ReconfigureRequest srv_req;
+  dynamic_reconfigure::ReconfigureResponse srv_resp;
+  dynamic_reconfigure::DoubleParameter double_param;
+  dynamic_reconfigure::Config conf;
+
+  // TODO: make sure this is the correct parameter name; I'm guessing it'll be within the local planner namespace
+  double_param.name = "base_local_planner/max_vel_x";
+  double_param.value = vel;
+  conf.doubles.push_back(double_param);
+
+  srv_req.config = conf;
+
+  if (ros::service::call(moveBaseTopic + "/set_parameters", srv_req, srv_resp))
+  {
+    return WaitResult(WaitResult::SUCCESS);
+  } 
+  else
+  {
+    return WaitResult(WaitResult::FAILED);
+  }
 }
 
 WaitResult MoveBase::SetMinVelocity(const double vel)
 {
-  // TODO
-  ROS_ERROR("unimplemented!");
-  return WaitResult(WaitResult::FAILED);
+  // Copied from https://answers.ros.org/question/12276/is-there-a-c-api-for-a-dynamic-reconfigure-client/
+  dynamic_reconfigure::ReconfigureRequest srv_req;
+  dynamic_reconfigure::ReconfigureResponse srv_resp;
+  dynamic_reconfigure::DoubleParameter double_param;
+  dynamic_reconfigure::Config conf;
+
+  // TODO: make sure this is the correct parameter name; I'm guessing it'll be within the local planner namespace
+  double_param.name = "base_local_planner/min_vel_x";
+  double_param.value = vel;
+  conf.doubles.push_back(double_param);
+
+  srv_req.config = conf;
+
+  if (ros::service::call(moveBaseTopic + "/set_parameters", srv_req, srv_resp))
+  {
+    return WaitResult(WaitResult::SUCCESS);
+  } 
+  else
+  {
+    return WaitResult(WaitResult::FAILED);
+  }
 }
 
 }

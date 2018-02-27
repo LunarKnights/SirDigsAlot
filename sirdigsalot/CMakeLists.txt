@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   move_base_msgs
   actionlib
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions

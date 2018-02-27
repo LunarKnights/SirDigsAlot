@@ -37,6 +37,7 @@ That includes:
 - [ ] camera feed for (potentially) measuring the amount of collected regolith
 
 Relevant documentation:
+- https://answers.ros.org/question/12276/is-there-a-c-api-for-a-dynamic-reconfigure-client/
 - http://docs.ros.org/api/actionlib/html/classactionlib_1_1SimpleActionClient.html#a16a367c503a355b3872f046cdf914c65
 - http://wiki.ros.org/move_base?distro=lunar#move_base-1
 - http://en.cppreference.com/w/cpp/thread/condition_variable
