@@ -7,6 +7,12 @@
 #include "ros/ros.h"
 #include "ros/console.h"
 
+#include <sirdigsalot/arena_frame_broadcaster.h>
+#include <sirdigsalot/move_base.h>
+#include <sirdigsalot/ticker_manager.h>
+
+using namespace sirdigsalot;
+
 int main(int argc, char** argv)
 {
   /// At the top of any ROS program, you'll probably need to call ros::init
@@ -18,11 +24,28 @@ int main(int argc, char** argv)
 
   auto r = ros::Rate(100);
 
+  TickerManager tickerManager;
+  auto moveBase = MoveBase::CreateInstance(nh, nhPrivate, tickerManager);
+
+  std::thread([=]() {
+    moveBase->Init();
+    // TODO: high level logic here
+
+    // test code
+    ROS_INFO("moving forward 1 m...");
+    moveBase->MoveForward(1.0f);
+    ROS_INFO("movement finished!");
+  });
+
   while (ros::ok())
   {
     r.sleep();
-    // TODO: Put high level planning stuff here
+    ros::spinOnce();
+    // run any low-level logic stuff here
+    tickerManager.TickAll();
   }
+  ros::spin();
 
   return 0;
 }
+

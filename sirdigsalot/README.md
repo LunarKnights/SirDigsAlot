@@ -13,6 +13,7 @@ We attach some details of this promise to the ROS callbacks used to collect data
 When this condition is detected within one of the callbacks, it pushes the result into the promise, triggering out main thread to unblock and continue on in its logic.
 
 ## TODOs
+- [ ] Implement all low level abstractions (Mar + 0 weeks)
 - [ ] Design high level logic (Mar + 0 weeks)
 - [ ] Implement low level framework (Feb + 2 weeks)
   - [ ] Implement high level logic (Mar + 1 week)
@@ -27,8 +28,26 @@ Unlike many of the other tasks listed here, I think this should be a group effor
 
 ### Implement low level framework
 I'll be writing a fairly simple API for the low level logic stuff.
+These don't need to be too performant, because the logic will be done on the order of milliseconds to seconds.
+That includes:
 
-- [ ] Implement low level framework (- points)
+- [ ] `move_base` for robot planning
+- [ ] controllers for actuation
+- [ ] fiducial tracker for locating the deposition bucket beacons
+- [ ] camera feed for (potentially) measuring the amount of collected regolith
+
+Relevant documentation:
+- https://answers.ros.org/question/12276/is-there-a-c-api-for-a-dynamic-reconfigure-client/
+- http://docs.ros.org/api/actionlib/html/classactionlib_1_1SimpleActionClient.html#a16a367c503a355b3872f046cdf914c65
+- http://wiki.ros.org/move_base?distro=lunar#move_base-1
+- http://en.cppreference.com/w/cpp/thread/condition_variable
+- http://www.ros.org/reps/rep-0105.html
+- https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20070017872.pdf (might be useful for averaging fiducial locations)
+
+- [ ] Implement `move_base` wrapper (50 points)
+- [ ] Implement controller wrapper (50 points)
+- [ ] Implement fiducial tracker wrapper (50 points)
+- [ ] Implement camera feed wrapper (50 points)
 
 ### Implement high level logic
 Use the low level API to implement the high level pseudocode developed before.

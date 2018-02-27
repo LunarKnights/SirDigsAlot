@@ -9,7 +9,14 @@ add_definitions(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  geometry_msgs
   std_msgs
+  move_base_msgs
+  actionlib
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +112,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES sirdigsalot
  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+# DEPENDS Eigen
 )
 
 
@@ -118,6 +125,7 @@ catkin_package(
 # include_directories(include)
 include_directories(
   include
+  # ${Eigen_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -133,7 +141,12 @@ include_directories(
 
 # Declare a C++ executable
 add_executable(sirdigsalot
-  src/sirdigsalot.cpp)
+  src/sirdigsalot.cpp
+  src/arena_frame_broadcaster.cpp
+  src/ticker_manager.cpp
+  src/move_base.cpp
+  src/wait_result.cpp
+  )
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
