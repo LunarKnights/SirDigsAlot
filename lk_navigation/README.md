@@ -58,4 +58,4 @@ Here's some relevant documents:
 - http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.721.540&rep=rep1&type=pdf
 - http://www.uco.es/investiga/grupos/ava/sites/default/files/GarridoJurado2014.pdf
 
-- [ ] Research fiducials (50 points)
+- [ ] Research fiducials (50-100 points)
