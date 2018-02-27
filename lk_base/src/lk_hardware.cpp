@@ -1,5 +1,6 @@
 #include "lk_base/lk_hardware.h"
 
+
 // TODO: make sure this matches the names in lk_description
 constexpr const char* kWheelNames[kNumWheels] = {
   "lf_wheel_joint", "lb_wheel_joint", "rf_wheel_joint", "rb_wheel_joint"
@@ -8,8 +9,17 @@ constexpr const char* kWheelNames[kNumWheels] = {
 namespace lk_base
 {
 
+bool LKHardware::canInterfaceInited = false;
+
 LKHardware::LKHardware(ros::NodeHandle nh, ros::NodeHandle private_nh)
 {
+  // initialize CAN interface if one's not already set up
+  if (!canInterfaceInited)
+  {
+    ROS_INFO("initializing can socket interface...");
+    can_talon_srx::CanSocketInterface::Init("can0");
+    ROS_INFO("can socket interface initialized!");
+  }
   // TODO: initialize hardware, read parameters, whatever
   registerInterfaces();
 }

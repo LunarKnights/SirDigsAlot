@@ -3,6 +3,10 @@
 
 #include "ros/ros.h"
 
+#include "can_talon_srx/can_base.h"
+#include "can_talon_srx/cansocket.h"
+#include "wpilib/CanTalonSRX.h"
+
 #include "hardware_interface/joint_state_interface.h"
 #include "hardware_interface/joint_command_interface.h"
 #include "hardware_interface/robot_hw.h"
@@ -28,9 +32,12 @@ public:
   void updateJointsFromHardware(double elapsed);
   void writeCommandsToHardware();
 
-private:
+protected:
   Joint wheels[kNumWheels];
   Joint ladder, deposition;
+
+  static bool canInterfaceInited;
+  std::vector<std::shared_ptr<CanTalonSRX> > talons;
 
   // NOTE: husky_base seems to make do with only VJI and JSI
   // but that's probably because it doesn't have a deposition system like we do
