@@ -41,6 +41,7 @@ Relevant documentation:
 - http://wiki.ros.org/move_base?distro=lunar#move_base-1
 - http://en.cppreference.com/w/cpp/thread/condition_variable
 - http://www.ros.org/reps/rep-0105.html
+- https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20070017872.pdf (might be useful for averaging fiducial locations)
 
 - [ ] Implement `move_base` wrapper (50 points)
 - [ ] Implement controller wrapper (50 points)
