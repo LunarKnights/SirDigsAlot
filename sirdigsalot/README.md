@@ -18,7 +18,6 @@ When this condition is detected within one of the callbacks, it pushes the resul
 - [ ] Implement low level framework (Feb + 2 weeks)
   - [ ] Implement high level logic (Mar + 1 week)
     - [ ] Write tests for high level logic (Mar + 3 weeks)
-- [ ] Implement low level abstractions
 
 ### Design high level logic
 We need to write some pseudocode to efficiently do the autonomous mining.
@@ -29,21 +28,6 @@ Unlike many of the other tasks listed here, I think this should be a group effor
 
 ### Implement low level framework
 I'll be writing a fairly simple API for the low level logic stuff.
-
-- [ ] Implement low level framework (- points)
-
-### Implement high level logic
-Use the low level API to implement the high level pseudocode developed before.
-
-- [ ] Implement high level logic (200 points)
-
-### Write tests for high level logic
-We need to figure out how to do full scale integration tests, and preferably find a way to automate them as much as possible.
-
-- [ ] Write tests for high level logic (100 points)
-
-### Implement lower level abstractions
-We need some simple wrappers for all the systems that we'll need access to.
 These don't need to be too performant, because the logic will be done on the order of milliseconds to seconds.
 That includes:
 
@@ -58,7 +42,17 @@ Relevant documentation:
 - http://en.cppreference.com/w/cpp/thread/condition_variable
 - http://www.ros.org/reps/rep-0105.html
 
-- [ ] Implement `move_base` wrapper (100 points)
-- [ ] Implement controller wrapper (100 points)
-- [ ] Implement fiducial tracker wrapper (100 points)
-- [ ] Implement camera feed wrapper (100 points)
+- [ ] Implement `move_base` wrapper (50 points)
+- [ ] Implement controller wrapper (50 points)
+- [ ] Implement fiducial tracker wrapper (50 points)
+- [ ] Implement camera feed wrapper (50 points)
+
+### Implement high level logic
+Use the low level API to implement the high level pseudocode developed before.
+
+- [ ] Implement high level logic (200 points)
+
+### Write tests for high level logic
+We need to figure out how to do full scale integration tests, and preferably find a way to automate them as much as possible.
+
+- [ ] Write tests for high level logic (100 points)
