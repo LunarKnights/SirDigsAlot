@@ -24,6 +24,7 @@ Relevant materials:
 - https://www.youtube.com/watch?v=p77hLLRfBGQ
 - https://www.youtube.com/watch?v=BLdmNSWRuzU
 - https://www.youtube.com/watch?v=EU6X1AYEksc
+- https://www.youtube.com/watch?v=OfrPAUyp1_s
 - http://openslam.org/gmapping
 - https://www.mrpt.org/List_of_SLAM_algorithms
 - https://github.com/googlecartographer/cartographer
