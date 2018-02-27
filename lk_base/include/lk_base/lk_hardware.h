@@ -20,11 +20,9 @@ class LKHardware : public hardware_interface::RobotHW
 {
   struct Joint
   {
+    Joint();
     double pos, accel, vel;
     double cmd;
-
-    void updatePos(double newPos, double dt);
-    void updateVel(double newVel, double dt);
   };
 public:
   LKHardware(ros::NodeHandle nh, ros::NodeHandle private_nh);
@@ -37,7 +35,7 @@ protected:
   Joint ladder, deposition;
 
   static bool canInterfaceInited;
-  std::vector<std::shared_ptr<CanTalonSRX> > talons;
+  std::vector<std::shared_ptr<CanTalonSRX> > wheelControllers;
 
   // NOTE: husky_base seems to make do with only VJI and JSI
   // but that's probably because it doesn't have a deposition system like we do

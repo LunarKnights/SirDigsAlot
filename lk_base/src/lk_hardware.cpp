@@ -48,7 +48,9 @@ void LKHardware::registerInterfaces()
 // the joint handles can access them
 void LKHardware::updateJointsFromHardware(double elapsed)
 {
-  // TODO
+  // TODO: update the joints as needed
+  // NOTE: Talon appears to return position and velocity, so all that's missing
+  // is the acceleration
 }
 
 // Send commands to hardware
@@ -57,16 +59,13 @@ void LKHardware::writeCommandsToHardware()
   // TODO
 }
 
-// Do calculations to calculate acceleration and velocity and whatever
-void LKHardware::Joint::updatePos(double newPos, double dt)
+LKHardware::Joint::Joint():
+  pos(0.0),
+  vel(0.0),
+  accel(0.0),
+  cmd(0.0)
 {
-  // TODO
-}
-
-// Do calculations to calculate acceleration and velocity and whatever
-void LKHardware::Joint::updateVel(double newPos, double dt)
-{
-  // TODO
+  // do nothing
 }
 
 }
