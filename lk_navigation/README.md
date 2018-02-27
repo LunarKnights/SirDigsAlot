@@ -8,6 +8,7 @@ The `sirdigsalot` package will talk to the navigation stack located here using t
   - [ ] Pick and configure different localization packages (Feb + 3 weeks)
     - [ ] Connect to move\_base node (Mar + 0 weeks)
         - [ ] Tune navigation stack (Mar + 2 weeks)
+- [ ] Determine fiducials to use (Feb + 2 weeks)
 
 ### Research localization packages
 We'll definitely be using a bunch of the different packages available from ROS for localization and mapping.
@@ -43,3 +44,14 @@ Relevant materials:
 After the move\_base node is correctly integrated into the system, tune it following the guide [here](http://kaiyuzheng.me/documents/navguide.pdf)
 
 - [ ] Tune navigation (25 points)
+
+### Determine fiducials to use
+So we need to attach some kind of fiducial markings onto the deposition bucket to orient the robot relative to the bucket.
+There seems to be two major kinds of fiducials (although there are probably more, go find them):
+- ArUco, which is a 2D bar code
+- (Fast) PiTag, which uses a set of circles
+
+We need to figure out which one is better for our robot.
+Both of these seem to be easyish to implement in ROS, ArUco is supported via the (aruco_detect)[http://wiki.ros.org/aruco_detect] package, and PiTag is supported through (cob_fiducials)[http://wiki.ros.org/cob_fiducials] (but the dependencies are an absolute mess so it might make sense to repackage this (un-ROSified version)[https://github.com/mpetroff/pi-tag-detector] of it to avoid the dependency problems.
+
+- [ ] Research fiducials (100 points)
