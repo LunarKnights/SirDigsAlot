@@ -18,6 +18,17 @@ So we need someone to research a bunch of them, document what they all do, and p
 ### Pick and configure different localization packages
 So after we have some of the different options researched, and narrowed it down to like 2 or 3 possible options, we need to actually add them to the system, configure them, and see how they perform.
 
+Relevant materials:
+- https://github.com/yunchih/ORB-SLAM2-GPU2016-final
+- https://www.youtube.com/watch?v=p77hLLRfBGQ
+- https://www.youtube.com/watch?v=BLdmNSWRuzU
+- https://www.youtube.com/watch?v=EU6X1AYEksc
+- http://openslam.org/gmapping
+- https://www.mrpt.org/List_of_SLAM_algorithms
+- https://github.com/googlecartographer/cartographer
+- http://wiki.ros.org/octomap
+- http://wiki.ros.org/rtabmap_ros
+
 - [ ] Test out a localization package (25 points/package)
 
 ### Connect to move\_base node
