@@ -13,10 +13,12 @@ We attach some details of this promise to the ROS callbacks used to collect data
 When this condition is detected within one of the callbacks, it pushes the result into the promise, triggering out main thread to unblock and continue on in its logic.
 
 ## TODOs
+- [ ] Implement all low level abstractions (Mar + 0 weeks)
 - [ ] Design high level logic (Mar + 0 weeks)
 - [ ] Implement low level framework (Feb + 2 weeks)
   - [ ] Implement high level logic (Mar + 1 week)
     - [ ] Write tests for high level logic (Mar + 3 weeks)
+- [ ] Implement low level abstractions
 
 ### Design high level logic
 We need to write some pseudocode to efficiently do the autonomous mining.
@@ -39,3 +41,18 @@ Use the low level API to implement the high level pseudocode developed before.
 We need to figure out how to do full scale integration tests, and preferably find a way to automate them as much as possible.
 
 - [ ] Write tests for high level logic (100 points)
+
+### Implement lower level abstractions
+We need some simple wrappers for all the systems that we'll need access to.
+These don't need to be too performant, because the logic will be done on the order of milliseconds to seconds.
+That includes:
+
+- [ ] `move_base` for robot planning
+- [ ] controllers for actuation
+- [ ] fiducial tracker for locating the deposition bucket beacons
+- [ ] camera feed for (potentially) measuring the amount of collected regolith
+
+- [ ] Implement `move_base` wrapper (100 points)
+- [ ] Implement controller wrapper (100 points)
+- [ ] Implement fiducial tracker wrapper (100 points)
+- [ ] Implement camera feed wrapper (100 points)
