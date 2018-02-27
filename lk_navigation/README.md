@@ -31,6 +31,8 @@ Relevant materials:
 - http://wiki.ros.org/octomap
 - http://wiki.ros.org/rtabmap_ros
 - https://github.com/eYSIP-2017/eYSIP-2017_Indoor-Environments-Mapping-using-UAV/wiki/Tutorial-3:-OctoMap-and-RTAB-Map
+- https://github.com/JakobEngel/dso_ros
+- https://vision.in.tum.de/research/vslam/dso
 
 - [ ] Test out a localization package (25 points/package)
 
