@@ -52,6 +52,12 @@ That includes:
 - [ ] fiducial tracker for locating the deposition bucket beacons
 - [ ] camera feed for (potentially) measuring the amount of collected regolith
 
+Relevant documentation:
+- http://docs.ros.org/api/actionlib/html/classactionlib_1_1SimpleActionClient.html#a16a367c503a355b3872f046cdf914c65
+- http://wiki.ros.org/move_base?distro=lunar#move_base-1
+- http://en.cppreference.com/w/cpp/thread/condition_variable
+- http://www.ros.org/reps/rep-0105.html
+
 - [ ] Implement `move_base` wrapper (100 points)
 - [ ] Implement controller wrapper (100 points)
 - [ ] Implement fiducial tracker wrapper (100 points)
