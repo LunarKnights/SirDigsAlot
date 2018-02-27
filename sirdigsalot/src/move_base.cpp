@@ -95,24 +95,7 @@ WaitResult MoveBase::MoveTo(const double x, const double y, const double angle, 
   auto ret = client->sendGoalAndWait(goal, timeout);
 
   // process the returned value
-  switch (ret.state_) {
-    case actionlib::SimpleClientGoalState::SUCCEEDED:
-      return WaitResult(WaitResult::SUCCESS);
-    case actionlib::SimpleClientGoalState::REJECTED:
-      ROS_WARN("move_base goal rejected!");
-      return WaitResult(WaitResult::FAILED);
-    case actionlib::SimpleClientGoalState::ABORTED:
-      ROS_WARN("move_base goal aborted!");
-      return WaitResult(WaitResult::FAILED);
-    case actionlib::SimpleClientGoalState::LOST:
-      ROS_WARN("move_base goal lost!");
-      return WaitResult(WaitResult::FAILED);
-    default:
-      ROS_ERROR("move_base returned unexpected state!");
-      return WaitResult(WaitResult::FAILED);
-  }
-  ROS_ERROR("unreachable code!");
-  return WaitResult(WaitResult::FAILED);
+  return WaitResult::FromGoalState(ret);
 }
 
 WaitResult MoveBase::MoveForward(const double x, const ros::Duration &timeout)
@@ -165,27 +148,8 @@ WaitResult MoveBase::MoveForward(const double x, const ros::Duration &timeout)
 
   auto ret = client->sendGoalAndWait(goal, timeout);
 
-
   // process the returned value
-  switch (ret.state_) {
-    case actionlib::SimpleClientGoalState::SUCCEEDED:
-      return WaitResult(WaitResult::SUCCESS);
-    case actionlib::SimpleClientGoalState::REJECTED:
-      ROS_WARN("move_base goal rejected!");
-      return WaitResult(WaitResult::FAILED);
-    case actionlib::SimpleClientGoalState::ABORTED:
-      ROS_WARN("move_base goal aborted!");
-      return WaitResult(WaitResult::FAILED);
-    case actionlib::SimpleClientGoalState::LOST:
-      ROS_WARN("move_base goal lost!");
-      return WaitResult(WaitResult::FAILED);
-    default:
-      ROS_ERROR("move_base returned unexpected state!");
-      return WaitResult(WaitResult::FAILED);
-  }
-  ROS_ERROR("unreachable code!");
-
-  return WaitResult(WaitResult::FAILED);
+  return WaitResult::FromGoalState(ret);
 }
 
 WaitResult MoveBase::SetMaxVelocity(const double vel)
