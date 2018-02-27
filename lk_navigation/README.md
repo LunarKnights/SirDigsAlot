@@ -34,6 +34,9 @@ Relevant materials:
 ### Connect to move\_base node
 After the localization and mapping stuff's taken care of, we just need to launch a `move_base` node and connect the topics so it'll work
 
+Relevant materials:
+- https://roscon.ros.org/2015/presentations/robot_localization.pdf
+
 - [ ] Connect a move\_base node (25 points)
 
 ### Tune navigation node
