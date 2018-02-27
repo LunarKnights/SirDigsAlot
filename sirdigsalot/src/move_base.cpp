@@ -11,12 +11,11 @@
 namespace sirdigsalot {
 
 MoveBase::MoveBase(ros::NodeHandle &nh, ros::NodeHandle &nhPriv):
-    nh(nh),
-    nhPriv(nhPriv),
     inited(false),
     tfBuffer(),
     tfListener(tfBuffer)
 {
+  // NOTE: need to make sure the right node is being used here
   nh.param<std::string>("move_base_topic", moveBaseTopic, "move_base");
   nh.param<std::string>("map_frame_id", mapFrame, "map");
   nh.param<std::string>("arena_frame_id", arenaFrame, "arena");

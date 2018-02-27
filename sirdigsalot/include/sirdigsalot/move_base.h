@@ -31,18 +31,22 @@ public:
   /// Moves the robot into a new pose within the timeout period
   /// Set the timeout to zero to just wait into the target pose is reached
   WaitResult MoveTo(const double x, const double y, const double angle, const ros::Duration &timeout=ros::Duration(0, 0));
+  // TODO test
 
   /// Moves the robot in the direction of the point
   /// Set the timeout to zero to wait until the target position is reached
   WaitResult MoveForward(const double x, const ros::Duration &timeout=ros::Duration(0, 0));
+  // TODO test
 
   /// Sets move_base's base_local_planner max_vel_x parameter to allow the robot's speed
   /// to be adjusted as needed
   WaitResult SetMaxVelocity(const double vel);
+  // TODO test
 
   /// Sets move_base's base_local_planner min_vel_x parameter to allow the robot's speed
   /// to be adjusted as needed
   WaitResult SetMinVelocity(const double vel);
+  // TODO test
 
   /// Creates an instance of MoveBase and registers it to the TickerManager
   static std::shared_ptr<MoveBase> CreateInstance(ros::NodeHandle &nh, ros::NodeHandle &nhPriv, TickerManager& manager);

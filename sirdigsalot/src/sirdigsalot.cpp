@@ -7,6 +7,7 @@
 #include "ros/ros.h"
 #include "ros/console.h"
 
+#include <sirdigsalot/arena_frame_broadcaster.h>
 #include <sirdigsalot/move_base.h>
 #include <sirdigsalot/ticker_manager.h>
 
