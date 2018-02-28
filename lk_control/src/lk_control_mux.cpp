@@ -86,7 +86,7 @@ public:
     }
     if (!teleopDetected)
     {
-      ROS_INFO("teleoperation detected!");
+      ROS_INFO("teleoperation detected! latching to teleop mode");
       teleopDetected = true;
     }
     if (killed)
@@ -102,12 +102,12 @@ public:
 
   void autonCb(const T& msg)
   {
-    {
-      std::lock_guard<std::mutex> guard(lastTimeLock);
-      lastTime = ros::Time::now();
-    }
     if (!teleopDetected)
     {
+      {
+        std::lock_guard<std::mutex> guard(lastTimeLock);
+        lastTime = ros::Time::now();
+      }
       if (killed)
       {
         killed = false;
@@ -152,8 +152,8 @@ int main(int argc, char** argv)
 
   nhPrivate.param<std::string>("kill_topic", killMotorsTopic, "kill_motors");
   nhPrivate.param<std::string>("cmd_vel_output", cmdVelOutput, "cmd_vel");
-  nhPrivate.param<std::string>("cmd_vel_tele", cmdVelTele, "tele_cmd_vel");
-  nhPrivate.param<std::string>("cmd_vel_auto", cmdVelAuto, "auto_cmd_vel");
+  nhPrivate.param<std::string>("tele_cmd_vel", cmdVelTele, "tele_cmd_vel");
+  nhPrivate.param<std::string>("auto_cmd_vel", cmdVelAuto, "auto_cmd_vel");
 
   ROS_INFO("kill motors topic: %s", killMotorsTopic.c_str());
   auto timeoutTimer = nh.createTimer(ros::Duration(0.5), timerCb);
