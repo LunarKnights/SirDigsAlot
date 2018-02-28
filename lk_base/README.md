@@ -12,7 +12,7 @@ Also, joint and actuator will be used interchangeably through the rest of this R
 
 - [ ] Add all the actuators used on the robot (Feb + 1 week)
   - [ ] Connect the actuators to the actual hardware (March + 0 weeks)
-    - [ ] Add timeouts/estop features (March + 3 weeks)
+    - [x] Add timeouts/estop features (March + 3 weeks)
 - [ ] Add all sensors (Feb + 2 weeks)
 - [ ] Make sure ROS dependencies are correct (Feb + 1 week)
 
@@ -49,8 +49,8 @@ This should include:
 So we need to figure out exactly what kinds of safety measures should be done, and then actually do that, and then write some integration tests to make sure it actually works.
 
 
-- [ ] Figure out high level design (25 points)
-- [ ] Implement design (50 points)
+- [x] Figure out high level design (25 points)
+- [x] Implement design (50 points)
 - [ ] Test and debug design (100 points)
 
 ### Add all sensors
