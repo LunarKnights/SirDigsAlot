@@ -2,5 +2,5 @@
 	path = can_talon_srx_ros
 	url = git@github.com:LunarKnights/can-talon-srx-ros.git
 [submodule "pi_tag_detector"]
-	path = pi_tag_detector
+	path = pitag_ros
 	url = git@github.com:LunarKnights/pi-tag-detector.git
