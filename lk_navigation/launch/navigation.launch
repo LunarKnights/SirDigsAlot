@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="nav">
+    <!-- global localization for map-odom -->
+    <include file="$(find lk_navigation)/launch/localization.launch">
+
+    <!-- ukf_localization for odom-base_link -->
+    <node name="ukf_local" pkg="robot_localization" type="ukf_localization">
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/ukf_local.yaml" command="load" />
+    </node>
+
+    <!-- add move_base -->
+    <node name="move_base" pkg="move_base" type="move_base" output="screen">
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/local_costmap_params.yaml" command="load" />
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/global_costmap_params.yaml" command="load" />
+      <!-- TODO: write param file -->
+      <rosparam file="$(find lk_navigation)/config/base_local_planner_params.yaml" command="load" />
+    </node>
+  </group>
+</launch>

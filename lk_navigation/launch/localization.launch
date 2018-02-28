@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- TODO: add node for global localization -->
+  <!-- TODO: add node for fiducials -->
+</launch>
