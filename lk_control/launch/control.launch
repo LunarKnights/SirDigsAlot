@@ -7,5 +7,6 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
   <!-- TODO: add ukf_localization -->
-  <!-- TODO: add control multiplexer -->
+
+  <node name="lk_control_mux" pkg="lk_control_mux" type="lk_control_mux"/>
 </launch>

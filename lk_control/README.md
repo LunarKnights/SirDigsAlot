@@ -24,7 +24,7 @@ It needs to automatically switch from receiving from the navigation stack to rec
 
 There are a lot of command messages that will be used, for every single actuator on the robot, so this node will need to do this multiplexing for each ROS topic that's used for commanding the robot.
 
-- [ ] Implement command multiplexer (50 points)
+- [x] Implement command multiplexer (50 points)
 - [ ] Configure launch scripts to use multiplexer (25 points)
 - [ ] Write tests for multiplexer (100 points)
 

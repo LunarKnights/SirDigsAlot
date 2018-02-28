@@ -17,6 +17,7 @@ public:
       const std::string &teleopTopic,
       const std::string &autoTopic)
   {
+    ROS_INFO("mux: %s, %s -> %s", teleopTopic.c_str(), autoTopic.c_str(), pubTopic.c_str());
     pub = nh.advertise<T>(pubTopic, 1);
     teleop = nh.subscribe(teleopTopic, 1, &Multiplexer<T>::teleopCb, this);
     auton = nh.subscribe(teleopTopic, 1, &Multiplexer<T>::autonCb, this);
@@ -51,12 +52,14 @@ int main(int argc, char** argv)
   auto nh = ros::NodeHandle();
   auto nhPrivate = ros::NodeHandle("~");
 
-  // TODO: get values from params
-  std::string cmdVelOutput = "cmd_vel";
-  std::string cmdVelTele = "tele_cmd_vel";
-  std::string cmdVelAuto = "auto_cmd_vel";
-
   auto r = ros::Rate(100);
+
+  // TODO: add more multiplexers for all the actuators
+  std::string cmdVelOutput, cmdVelTele, cmdVelAuto;
+
+  nhPrivate.param<std::string>("cmd_vel_output", cmdVelOutput, "cmd_vel");
+  nhPrivate.param<std::string>("cmd_vel_tele", cmdVelTele, "tele_cmd_vel");
+  nhPrivate.param<std::string>("cmd_vel_auto", cmdVelAuto, "auto_cmd_vel");
 
   Multiplexer<geometry_msgs::Twist>(nh, cmdVelOutput, cmdVelTele, cmdVelAuto);
 
