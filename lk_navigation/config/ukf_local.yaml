@@ -1,1 +1,8 @@
-# TODO
+map_frame: /map
+odom_frame: odom
+base_link_frame: /base_link
+world_frame: odom
+
+# TODO: add sources
+# odom0: /lk_diff_drive/odom
+# odom0_config: [ ...stuff here... ]
