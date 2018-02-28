@@ -50,7 +50,8 @@ void LKHardware::updateJointsFromHardware(double elapsed)
 {
   // TODO: update the joints as needed
   // NOTE: Talon appears to return position and velocity, so all that's missing
-  // is the acceleration
+  // is the acceleration, which should probably be a little time-averaged
+  // so that bad data doesn't mess it up too badly
 }
 
 // Send commands to hardware
