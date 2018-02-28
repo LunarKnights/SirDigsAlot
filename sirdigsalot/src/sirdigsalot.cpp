@@ -44,7 +44,6 @@ int main(int argc, char** argv)
     // run any low-level logic stuff here
     tickerManager.TickAll();
   }
-  ros::spin();
 
   return 0;
 }
