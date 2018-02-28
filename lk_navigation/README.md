@@ -33,6 +33,7 @@ Relevant materials:
 - https://github.com/eYSIP-2017/eYSIP-2017_Indoor-Environments-Mapping-using-UAV/wiki/Tutorial-3:-OctoMap-and-RTAB-Map
 - https://github.com/JakobEngel/dso_ros
 - https://vision.in.tum.de/research/vslam/dso
+- https://www.reddit.com/r/computervision/comments/62aofs/which_slam_project_to_use/
 
 - [ ] Test out a localization package (25 points/package)
 
