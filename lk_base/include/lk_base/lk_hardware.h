@@ -1,7 +1,11 @@
 #ifndef LK_BASE_LK_HARDWARE_H
 #define LK_BASE_LK_HARDWARE_H
 
+#include <atomic>
+
 #include "ros/ros.h"
+
+#include "std_msgs/Bool.h"
 
 #include "can_talon_srx/can_base.h"
 #include "can_talon_srx/cansocket.h"
@@ -31,6 +35,8 @@ public:
   void writeCommandsToHardware();
 
 protected:
+  void killMotorsCb(const std_msgs::Bool& msg);
+
   Joint wheels[kNumWheels];
   Joint ladder, deposition;
 
@@ -43,6 +49,10 @@ protected:
   hardware_interface::PositionJointInterface pji;
   hardware_interface::JointStateInterface jsi;
   hardware_interface::EffortJointInterface eji;
+
+  // interface for instantlly stopping the robot
+  std::atomic<bool> killed;
+  ros::Subscriber killMotors;
 };
 
 }

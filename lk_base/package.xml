@@ -53,8 +53,10 @@
   <build_depend>roscpp</build_depend>
   <build_depend>controller_manager</build_depend>
   <build_depend>can_talon_srx_ros</build_depend>
+  <build_depend>std_msgs</build_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>controller_manager</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
 
   <exec_depend>lk_control</exec_depend>
   <exec_depend>lk_gazebo</exec_depend>

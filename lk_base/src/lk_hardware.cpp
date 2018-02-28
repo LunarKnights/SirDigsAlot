@@ -11,8 +11,11 @@ namespace lk_base
 
 bool LKHardware::canInterfaceInited = false;
 
-LKHardware::LKHardware(ros::NodeHandle nh, ros::NodeHandle private_nh)
+LKHardware::LKHardware(ros::NodeHandle nh, ros::NodeHandle private_nh): killed(false)
 {
+  // TODO: get topic name from param
+  killMotors = nh.subscribe("kill_motors", 1, &LKHardware::killMotorsCb, this);
+
   // initialize CAN interface if one's not already set up
   if (!canInterfaceInited)
   {
@@ -57,7 +60,16 @@ void LKHardware::updateJointsFromHardware(double elapsed)
 // Send commands to hardware
 void LKHardware::writeCommandsToHardware()
 {
-  // TODO
+  if (killed)
+  {
+    // TODO: stop all motors
+  }
+  // TODO: write command to motors
+}
+
+void LKHardware::killMotorsCb(const std_msgs::Bool &msg)
+{
+  killed = msg.data;
 }
 
 LKHardware::Joint::Joint():
