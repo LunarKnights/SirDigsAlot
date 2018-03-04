@@ -4,3 +4,6 @@
 [submodule "pi_tag_detector"]
 	path = pitag_ros
 	url = git@github.com:LunarKnights/pi-tag-detector.git
+[submodule "fiducials2pose"]
+	path = fiducials2pose
+	url = git@github.com:LunarKnights/fiducials2pose.git
