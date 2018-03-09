@@ -1,0 +1,1 @@
+controller_joint_names: ['frontLeftWheelRotate', 'backLeftWheelRotate', 'frontRightWheelRotate', 'backRightWheelRotate', 'depRightExtend', 'depLeftExtend', 'cameraExtend', 'intakeExtend', ]
