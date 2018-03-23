@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <param name="resolution" value="3" />
+  </node>
+  <node name="pitag" pkg="pitag_ros" type="pitag_ros_node" output="screen">
+    <param name="model_path" value="$(find lk_navigation)/config/fiducials.xml" />
+    <param name="camera_topic" value="/rgb/image_rect_color" />
+    <param name="camera_info_topic" value="/rgb/camera_info" />
+  </node>
+  <node name="f2p" pkg="fiducials2pose" type="fiducials2pose_node" output="screen">
+    <param name="camera_frame_id" value="base_frame" />
+    <param name="fiducial_topic" value="/pitag/fiducials" />
+    <param name="tf_prefix" value="sirdigsalot" />
+    <rosparam param="fiducial_frame_ids">
+      ["left_fiducial"]
+    </rosparam>
+  </node>
+</launch>

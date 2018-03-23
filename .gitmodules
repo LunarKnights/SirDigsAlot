@@ -7,3 +7,6 @@
 [submodule "fiducials2pose"]
 	path = fiducials2pose
 	url = git@github.com:LunarKnights/fiducials2pose.git
+[submodule "zed-ros-wrapper"]
+	path = zed-ros-wrapper
+	url = https://github.com/stereolabs/zed-ros-wrapper
