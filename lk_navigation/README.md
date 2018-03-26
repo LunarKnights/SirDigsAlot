@@ -57,6 +57,7 @@ So we need to attach some kind of fiducial markings onto the deposition bucket t
 There seems to be two major kinds of fiducials (although there are probably more, go find them):
 - ArUco, which is a 2D bar code
 - (Fast) PiTag, which uses a set of circles
+- AprilTag2, which apparently works better than ArUco
 
 We need to figure out which one is better for our robot.
 Both of these seem to be easyish to implement in ROS, ArUco is supported via the [aruco_detect](http://wiki.ros.org/aruco_detect) package, and PiTag is supported through [cob_fiducials](http://wiki.ros.org/cob_fiducials) (but the dependencies are an absolute mess so it might make sense to repackage this [un-ROSified version](https://github.com/mpetroff/pi-tag-detector) of it to avoid the dependency problems.
