@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <param name="resolution" value="3" />
+  </node>
+
+  <rosparam command="load" file="$(find lk_navigation)/config/ap2_settings.yaml" ns="ap2" />
+  <rosparam command="load" file="$(find lk_navigation)/config/ap2_tags.yaml" ns="ap2" />
+  <node name="ap2" pkg="apriltags2_ros" type="apriltags2_ros_continuous_node" output="screen">
+    <remap from="/image_rect" to="/rgb/image_rect_color" />
+    <param name="camera_frame" type="str" value="base_frame" />
+  </node>
+  <!--
+  <node name="f2p" pkg="fiducials2pose" type="fiducials2pose_node" output="screen">
+    <param name="camera_frame_id" value="base_frame" />
+    <param name="fiducial_topic" value="/pitag/fiducials" />
+    <param name="tf_prefix" value="sirdigsalot" />
+    <rosparam param="fiducial_frame_ids">
+      ["left_fiducial"]
+    </rosparam>
+  </node>
+  -->
+</launch>

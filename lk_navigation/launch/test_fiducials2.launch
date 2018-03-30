@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <param name="resolution" value="3" />
+  </node>
+  <node name="aruco" pkg="aruco_detect" type="aruco_detect" output="screen">
+    <remap from="/camera_info" to="/rgb/camera_info_raw" />
+    <remap from="/camera" to="/rgb/image_raw_color" />
+  </node>
+  <!--
+  <node name="f2p" pkg="fiducials2pose" type="fiducials2pose_node" output="screen">
+    <param name="camera_frame_id" value="base_frame" />
+    <param name="fiducial_topic" value="/pitag/fiducials" />
+    <param name="tf_prefix" value="sirdigsalot" />
+    <rosparam param="fiducial_frame_ids">
+      ["left_fiducial"]
+    </rosparam>
+  </node>
+  -->
+</launch>

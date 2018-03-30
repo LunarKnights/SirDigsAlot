@@ -10,3 +10,6 @@
 [submodule "zed-ros-wrapper"]
 	path = zed-ros-wrapper
 	url = https://github.com/stereolabs/zed-ros-wrapper
+[submodule "apriltags2_ros"]
+	path = apriltags2_ros
+	url = https://github.com/cactorium/apriltags2_ros
