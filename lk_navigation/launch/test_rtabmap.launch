@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<launch>
+	<group ns="zed">
+		<node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+			<param name="base_frame" value="base_link"/>
+			<param name="camera_frame" value="base_link"/>
+			<param name="depth_frame" value="base_link"/>
+			<param name="resolution" value="2" />
+		</node>
+	</group>
+
+	<group ns="nav">
+		<node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
+			<remap from="rgb/image"       to="/zed/rgb/image_raw_color"/>
+			<remap from="rgb/camera_info" to="/zed/rgb/camera_info"/>
+			<remap from="depth/image"     to="/zed/depth/depth_registered"/>
+			<param name="depth_image_transport" value="compressed"/>
+
+			<param name="frame_id" type="string" value="base_link"/>
+      <param name="Odom/GuessMotion" value="true"/>
+      <param name="Vis/CorType" value="1"/>
+      <param name="Vis/EstimationType" value="1"/>
+		</node>
+
+		<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+			<param name="frame_id" type="string" value="base_link"/>
+			<param name="subscribe_depth" type="bool" value="true"/>
+
+			<remap from="odom" to="odom"/>
+			<remap from="rgb/image" to="/zed/rgb/image_rect_color"/>
+			<remap from="depth/image" to="/zed/depth/depth_registered"/>
+			<param name="depth_image_transport" value="compressed"/>
+			<remap from="rgb/camera_info" to="/zed/rgb/camera_info"/>
+
+			<param name="queue_size" type="int" value="10"/>
+
+			<!-- RTAB-Map's parameters -->
+			<param name="RGBD/AngularUpdate" type="string" value="0.01"/>
+			<param name="RGBD/LinearUpdate" type="string" value="0.01"/>
+			<param name="Rtabmap/TimeThr" type="string" value="700"/>
+			<param name="Mem/RehearsalSimilarity" type="string" value="0.45"/>
+			<param name="RGBD/OptimizeFromGraphEnd" type="string" value="true"/>
+		</node>
+	</group>
+</launch>

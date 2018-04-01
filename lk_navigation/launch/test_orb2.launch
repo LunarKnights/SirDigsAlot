@@ -7,6 +7,7 @@
     <param name="vocabulary_path" value="$(find orb2_slam_cuda)/Vocabulary/ORBvoc.txt" />
     <param name="settings_path" value="$(find orb2_slam_cuda_ros)/config/test.yaml" />
     <param name="camera_type" value="1" />
+    <param name="publish_tf" value="true" />
     <remap from="camera/depth_registered/image_raw" to="/depth/depth_registered" />
     <remap from="camera/rgb/image_raw" to="/left/image_raw_color" />
   </node>
