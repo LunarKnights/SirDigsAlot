@@ -3,6 +3,11 @@
   <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
     <param name="resolution" value="3" />
   </node>
-  <node name="orb2_slam" pkg="orb2_slam_cuda_ros" type="rgbd" output="screen">
+  <node name="orb2_slam" pkg="orb2_slam_cuda_ros" type="orb2_slam_cuda_node" output="screen">
+    <param name="vocabulary_path" value="$(find orb2_slam_cuda)/Vocabulary/ORBvoc.txt" />
+    <param name="settings_path" value="$(find orb2_slam_cuda_ros)/config/test.yaml" />
+    <param name="camera_type" value="1" />
+    <remap from="camera/depth_registered/image_raw" to="/depth/depth_registered" />
+    <remap from="camera/rgb/image_raw" to="/left/image_raw_color" />
   </node>
 </launch>

@@ -13,6 +13,6 @@
 [submodule "apriltags2_ros"]
 	path = apriltags2_ros
 	url = https://github.com/cactorium/apriltags2_ros
-[submodule "orb-slam2"]
+[submodule "orb2_slam"]
 	path = orb2_slam
 	url = git@github.com:LunarKnights/ORB-SLAM2-GPU2016-final.git
