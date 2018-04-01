@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <param name="resolution" value="3" />
+  </node>
+  <node name="orb2_slam" pkg="orb2_slam_cuda_ros" type="rgbd" output="screen">
+  </node>
+</launch>
