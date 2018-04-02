@@ -1,12 +1,6 @@
 [submodule "can-talon-srx-ros"]
 	path = can_talon_srx_ros
 	url = git@github.com:LunarKnights/can-talon-srx-ros.git
-[submodule "pi_tag_detector"]
-	path = pitag_ros
-	url = git@github.com:LunarKnights/pi-tag-detector.git
-[submodule "fiducials2pose"]
-	path = fiducials2pose
-	url = git@github.com:LunarKnights/fiducials2pose.git
 [submodule "zed-ros-wrapper"]
 	path = zed-ros-wrapper
 	url = https://github.com/stereolabs/zed-ros-wrapper
