@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <param name="resolution" value="3" />
+    <param name="frame_rate" value="60" />
+  </node>
+  <node name="svo" pkg="svo_ros" type="vo" clear_params="true" output="screen">
+    <!-- Camera topic to subscribe to -->
+    <param name="cam_topic" value="/rgb/image_raw_color" type="str" />
+    
+    <!-- Camera calibration file -->
+    <rosparam file="$(find lk_navigation)/config/svo_camera_calib.yaml" />
+    
+    <!-- Default parameter settings: choose between vo_fast and vo_accurate -->
+    <rosparam file="$(find svo_ros)/param/vo_fast.yaml" />
+
+  </node>
+</launch>

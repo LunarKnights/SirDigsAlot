@@ -5,7 +5,8 @@
 			<param name="base_frame" value="base_link"/>
 			<param name="camera_frame" value="base_link"/>
 			<param name="depth_frame" value="base_link"/>
-			<param name="resolution" value="2" />
+			<param name="resolution" value="3" />
+			<param name="frame_rate" value="60" />
 		</node>
 	</group>
 

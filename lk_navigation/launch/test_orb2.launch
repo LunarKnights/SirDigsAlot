@@ -2,6 +2,7 @@
 <launch>
   <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
     <param name="resolution" value="3" />
+    <param name="frame_rate" value="60" />
   </node>
   <node name="orb2_slam" pkg="orb2_slam_cuda_ros" type="orb2_slam_cuda_node" output="screen">
     <param name="vocabulary_path" value="$(find orb2_slam_cuda)/Vocabulary/ORBvoc.txt" />
