@@ -9,4 +9,4 @@
 	url = https://github.com/cactorium/apriltags2_ros
 [submodule "orb2_slam"]
 	path = orb2_slam
-	url = git@github.com:LunarKnights/ORB-SLAM2-GPU2016-final.git
+	url = git@github.com:LunarKnights/orb2_slam.git
