@@ -1,5 +1,13 @@
 <robot
   name="sirdigsalot">
+
+  <!-- <link name="world"/> -->
+
+  <!-- <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint> -->
+
   <link
     name="base_link">
     <inertial>
@@ -61,8 +69,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/frontLeftWheel.STL" />
+          <cylinder length=".1016" radius=".1524"/>
+        <!-- <mesh
+          filename="package://lk_description/meshes/frontLeftWheel.STL" /> -->
       </geometry>
       <material
         name="">
@@ -75,8 +84,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/frontLeftWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/frontLeftWheel.STL" /> -->
+        <cylinder length=".1016" radius=".1524"/>
       </geometry>
     </collision>
   </link>
@@ -114,8 +124,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/backLeftWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/backLeftWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
       <material
         name="">
@@ -128,8 +139,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/backLeftWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/backLeftWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
     </collision>
   </link>
@@ -146,6 +158,8 @@
     <axis
       xyz="0 0 1" />
   </joint>
+
+
   <link
     name="frontRightWheel">
     <inertial>
@@ -167,8 +181,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/frontRightWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/frontRightWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
       <material
         name="">
@@ -181,8 +196,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/frontRightWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/frontRightWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
     </collision>
   </link>
@@ -220,8 +236,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/backRightWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/backRightWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
       <material
         name="">
@@ -234,8 +251,9 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://lk_description/meshes/backRightWheel.STL" />
+        <!-- <mesh
+          filename="package://lk_description/meshes/backRightWheel.STL" /> -->
+                  <cylinder length=".1016" radius=".1524"/>
       </geometry>
     </collision>
   </link>
@@ -252,7 +270,7 @@
     <axis
       xyz="0 0 1" />
   </joint>
-  <link
+  <!-- <link
     name="depRightActuator">
     <inertial>
       <origin
@@ -291,8 +309,8 @@
           filename="package://lk_description/meshes/depRightActuator.STL" />
       </geometry>
     </collision>
-  </link>
-  <joint
+  </link> -->
+  <!-- <joint
     name="depRightExtend"
     type="prismatic">
     <origin
@@ -530,5 +548,56 @@
       upper="0"
       effort="0"
       velocity="0" />
-  </joint>
-</robot>
+  </joint> -->
+    <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/sirdigsalot</robotNamespace>
+      <!-- <robotParam>/robot_description</robotParam> -->
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+
+    </plugin>
+  </gazebo>
+		<transmission name="backLeftWheelTrans" type="SimpleTransmission">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="backLeftWheelMotor">
+				<mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+			</actuator>
+			<joint name="backLeftWheelRotate">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="frontLeftWheelTrans" type="SimpleTransmission">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="frontLeftWheelMotor">
+				<mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+			</actuator>
+			<joint name="frontLeftWheelRotate">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="backRightWheelTrans" type="SimpleTransmission">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="backRightWheelMotor">
+				<mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+			</actuator>
+			<joint name="backRightWheelRotate">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+		<transmission name="frontRightWheelTrans" type="SimpleTransmission">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="frontRightWheelMotor">
+				<mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+			</actuator>
+			<joint name="frontRightWheelRotate">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
