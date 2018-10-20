@@ -2,7 +2,7 @@
 <launch>
   <!-- uses empty world logic but changes name -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find lk_gazebo)/worlds/empty.world"/>
+    <arg name="world_name" value="$(find lk_gazebo)/worlds/RMC.world"/>
     <arg name="gui" value="false"/>
     <arg name="paused" value="false"/>
     <!-- more parameters would go here -->

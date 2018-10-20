@@ -3,7 +3,7 @@
 
 // TODO: make sure this matches the names in lk_description
 constexpr const char* kWheelNames[kNumWheels] = {
-  "lf_wheel_joint", "lb_wheel_joint", "rf_wheel_joint", "rb_wheel_joint"
+  "frontLeftWheelRotate", "backLeftWheelRotate", "frontRightWheelRotate", "backRightWheelRotate"
 };
 
 namespace lk_base
@@ -42,9 +42,9 @@ void LKHardware::registerInterfaces()
   }
   // TODO: add joints for bucket and deposition system and whatever
   registerInterface(&vji);
-  registerInterface(&pji);
+//  registerInterface(&pji);
   registerInterface(&jsi);
-  registerInterface(&eji);
+//  registerInterface(&eji);
 }
 
 // Gets values from hardware and stores them in the Joint structs, so that

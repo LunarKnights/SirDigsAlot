@@ -46,9 +46,9 @@ protected:
   // NOTE: husky_base seems to make do with only VJI and JSI
   // but that's probably because it doesn't have a deposition system like we do
   hardware_interface::VelocityJointInterface vji;
-  hardware_interface::PositionJointInterface pji;
+//  hardware_interface::PositionJointInterface pji;
   hardware_interface::JointStateInterface jsi;
-  hardware_interface::EffortJointInterface eji;
+//  hardware_interface::EffortJointInterface eji;
 
   // interface for instantlly stopping the robot
   std::atomic<bool> killed;
