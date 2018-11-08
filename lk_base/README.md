@@ -2,27 +2,8 @@
 This is the package that connects the control inputs from the nodes in lk\_control to actual hardware (or gazebo).
 The lk\_control will connect to the `ControllerManager` created in this package, and spawn controllers to connect ROS control topics (like cmd\_vel) to the hardware.
 The corresponding ROS documentation is [here](http://wiki.ros.org/ros_control).
-Also, joint and actuator will be used interchangeably through the rest of this README; both basically refer to a thing on the robot that moves and that we have some control over.
 
-## Things already implemented
 
-- Base framework so that stuff can be added more easily
-
-## TODOs
-
-- [ ] Add all the actuators used on the robot (Feb + 1 week)
-  - [ ] Connect the actuators to the actual hardware (March + 0 weeks)
-    - [x] Add timeouts/estop features (March + 3 weeks)
-- [ ] Add all sensors (Feb + 2 weeks)
-- [ ] Make sure ROS dependencies are correct (Feb + 1 week)
-
-### Add all the actuators
-So currently this package only registers joints for the base of the robot.
-We need to add joints for the whole rest of it.
-Go bother Dan or some other mechanical people to get an accurate idea of where all the actuators are, how many there are, and what they'll do.
-Then
-- [ ] Document all the joints by adding a section to this README about them (25 points)
-- [ ] Add the joints to `src/lw_hardware.h` and register them in `LKHardware::registerInterfaces()` (50 points)
 
 ### Connect the actuators to the motor controllers
 Right now all this package does is provide a place for controllers to put their commands and get their sensor data from.
@@ -33,10 +14,6 @@ Technically, it's a little more complicated than that, but this is a good enough
 So, after the previous step is done, the controllers will be periodically writing data to some floating-point values in `LKHardware`, and then reading some values from other floating-point numbers in `LKHardware`.
 Now we need to make sure those numbers are meaningful values captured from the real world.
 
-- [ ] Finish `can_talon_srx` work (- points)
-- [ ] Set up similar interface for stepper motors (100 points)
-- [ ] Work out testing protocol (50 points)
-- [ ] Connect and test them all here (25 points)
 
 ### Add timeouts/emergency stops
 For added safety, we need to add some code to automatically disable all the motors whenever something that's potentially bad happens.
@@ -49,10 +26,6 @@ This should include:
 So we need to figure out exactly what kinds of safety measures should be done, and then actually do that, and then write some integration tests to make sure it actually works.
 
 
-- [x] Figure out high level design (25 points)
-- [x] Implement design (50 points)
-- [ ] Test and debug design (100 points)
-
 ### Add all sensors
 We need to compile a list of all the sensors on the robot and their positions on it too.
 Each sensor will probably have a ROS node that will communicate with it and publish their data for the sensor fusion stuff to use.
@@ -60,10 +33,6 @@ Each sensor will probably have a ROS node that will communicate with it and publ
 ```
 Sensor list here
 ```
-
-- [ ] List out all the sensors and post the list here (10 points)
-  - [ ] Research ROS nodes (10 points/sensor)
-  - [ ] Add stuff to launch files to set up sensors correctly (25 points/sensor)
 
 ### Check dependencies
 In `package.xml`, there is a list of dependencies, which may or may not reflect what this package actually needs.
