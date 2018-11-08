@@ -19,13 +19,11 @@ USE\_GAZEBO=true roslaunch sirdigsalot bringup.launch
 
 # How to contribute
 Preliminary information on Git is available [here](https://help.github.com/articles/about-pull-requests/) and [here](https://git-scm.com/book/en/v1/Git-Branching-What-a-Branch-Is).
-Ideally, you should fork this project, make an issue indicating that you're working on something, and then when you finish your task, open a pull request to merge your changes into the main codebase.
 Also add yourself to the maintainers list in the `package.xml` file for that package, so that people working on that project down the line can bother you in the future.
-If that seems too complicated, just email me a zipfile or tarball of the repository with the changes and I'll do the bookkeeping needed to make sure you get points.
+
 
 # TODOs
 These will be discussed in more detail in the READMEs in each package
-- [ ] Make a nice graph of package dependencies (100 points)
 - [ ] Improve robot modelling (lk\_gazebo, lk\_description)
 - [ ] Add in remaining actuators for deposition system/camera system/whatever else (lk\_description)
 - [ ] Implement controller lock node to allow cleaner transition between automated mode and teleop (lk\_control, new node)
@@ -38,28 +36,8 @@ These will be discussed in more detail in the READMEs in each package
 - [ ] Add/configure localization nodes (lk\_navigation)
 - [ ] And/configure move\_base for robot navigation planning (lk\_navigation)
 - [ ] Improve world simulation (lk\_gazebo)
-- [x] Add in hardware interfacing (CAN) code
+- [ ] Add in hardware interfacing (CAN) code
 
-# Developer notes
-~~The code should be formatted against the ROS standard so that's everything's nice and uniform.
-The easiest way to do this is using `clang-tidy` with this guy's [formatting rules](https://github.com/davetcoleman/roscpp_code_format)~~
-
-~~This is how to install `clang-tidy` and that guy's rules:~~
-```
-sudo apt-get install -y clang-format-3.8
-cd ~
-git clone https://github.com/davetcoleman/roscpp_code_format
-ln -s ~/roscpp_code_format/.clang-format ~/catkin_ws/.clang-format
-```
-
-~~and then run this from the `src/` directory to restyle any files you've changed:~~
-```
-find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs clang-format-3.8 -i -style=file $1
-```
-
-Fuck that, just submit whatever and I'll fix it up.
-
- 
 # Setup instructions
 These should probably get you a working copy of Sirdigsalot on your computer
 
