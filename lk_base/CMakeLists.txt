@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   controller_manager
-  can_talon_srx_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -149,9 +148,15 @@ add_executable(lk_base
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+
 target_link_libraries(lk_base
+    $ENV{HOME}/CTRE/cpp/lib/x86-64/libCTRE_Phoenix.a
+    $ENV{HOME}/CTRE/cpp/lib/x86-64/libCTRE_PhoenixCCI.a
+    $ENV{HOME}/CTRE/cpp/lib/x86-64/libCTRE_PhoenixPlatform_socketcan.a
+    $ENV{HOME}/CTRE/cpp/lib/x86-64/libCTRE_PhoenixCanutils.a
   ${catkin_LIBRARIES}
 )
+#aarch64
 
 #############
 ## Install ##

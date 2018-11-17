@@ -1,14 +1,22 @@
 <?xml version="1.0"?>
-<launch>
-  <rosparam command="load" file="$(find lk_control)/config/control.yaml"/>
-  <rosparam file="$(find lk_control)/config/hardware.yaml"/>
-  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
-    args="sirdigsalot/lk_joint_publisher sirdigsalot/lk_velocity_controller"/>
-    <!-- args="lk_joint_publisher lk_velocity_controller"/> -->
+  <group ns="/sirdigsalot">
 
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <!-- Load hardware interface -->
+    <!-- <node name="sirdigsalot_hardware_interface" pkg="ros_control_boilerplate" type="sirdigsalot_hw_main"
+          output="screen" launch-prefix="$(arg launch_prefix)"/> -->
 
-  <!-- TODO: add ukf_localization -->
+    <!-- Load controller settings -->
+    <rosparam file="$(find lk_control)/config/control.yaml" command="load"/>
 
+    <!-- Load controller manager -->
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+	  output="screen" args="spawn joint_state_controller lk_diff_drive_controller" />
+
+    <!-- Convert joint states to /tf tranforms -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <remap from="/joint_states" to="/sirdigsalot/joint_states"/>
+   </node>
   <node name="lk_control_mux" pkg="lk_control" type="lk_control_mux"/>
+  </group>
+
 </launch>

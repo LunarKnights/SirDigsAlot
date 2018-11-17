@@ -7,9 +7,9 @@
 
 #include "std_msgs/Bool.h"
 
-#include "can_talon_srx/can_base.h"
-#include "can_talon_srx/cansocket.h"
-#include "wpilib/CanTalonSRX.h"
+#include "ctre/Phoenix.h"
+#include "Platform-linux-socket-can.h"
+#include "ctre/phoenix/unmanaged/Unmanaged.h"
 
 #include "hardware_interface/joint_state_interface.h"
 #include "hardware_interface/joint_command_interface.h"
@@ -41,7 +41,7 @@ protected:
   Joint ladder, deposition;
 
   static bool canInterfaceInited;
-  std::vector<std::shared_ptr<CanTalonSRX> > wheelControllers;
+  std::vector<std::shared_ptr<TalonSRX> > wheelControllers;
 
   // NOTE: husky_base seems to make do with only VJI and JSI
   // but that's probably because it doesn't have a deposition system like we do

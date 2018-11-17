@@ -20,10 +20,25 @@ LKHardware::LKHardware(ros::NodeHandle nh, ros::NodeHandle private_nh): killed(f
   if (!canInterfaceInited)
   {
     ROS_INFO("initializing can socket interface...");
-    can_talon_srx::CanSocketInterface::Init("can0");
+    ctre::phoenix::platform::can::SetCANInterface("can0");
     ROS_INFO("can socket interface initialized!");
   }
   // TODO: initialize hardware, read parameters, whatever
+
+    // TalonSRX * talon = new TalonSRX(1);
+    // talon->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative,0,kTimeoutMs);
+    // talon->SetSensorPhase(true);
+    // talon->ConfigNominalOutputForward(0,kTimeoutMs);
+    // talon->ConfigNominalOutputReverse(0,kTimeoutMs);
+    // talon->ConfigPeakOutputForward(1,kTimeoutMs);
+    // talon->ConfigPeakOutputReverse(-1,kTimeoutMs);
+    // talon->Config_kF(0,0.1097,kTimeoutMs);
+    // talon->Config_kP(0,.22,kTimeoutMs);
+    // talon->Config_kI(0,0,kTimeoutMs);
+    // talon->Config_kD(0,0,kTimeoutMs);
+    // talon->SetStatusFramePeriod(StatusFrame::Status_1_General_,5,kTimeoutMs);
+
+
   registerInterfaces();
 }
 
@@ -55,6 +70,10 @@ void LKHardware::updateJointsFromHardware(double elapsed)
   // NOTE: Talon appears to return position and velocity, so all that's missing
   // is the acceleration, which should probably be a little time-averaged
   // so that bad data doesn't mess it up too badly
+  //talon->GetClosedLoopTarget()
+//talon->GetSelectedSensorVelocity()
+//talon->GetClosedLoopError()
+
 }
 
 // Send commands to hardware
@@ -65,6 +84,10 @@ void LKHardware::writeCommandsToHardware()
     // TODO: stop all motors
   }
   // TODO: write command to motors
+  //    talon->Set(ControlMode::Velocity,targetVelocity_UnitsPer100ms);
+  //    ctre::phoenix::unmanaged::FeedEnable(100);
+
+
 }
 
 void LKHardware::killMotorsCb(const std_msgs::Bool &msg)
